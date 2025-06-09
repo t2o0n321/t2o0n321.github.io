@@ -3,7 +3,7 @@
 <html lang="zh-TW">
 <head>
     <meta charset="utf-8" />
-    <title>歡迎光臨 | t2o0n321.blog</title>
+    <title>Tags: hexo | t2o0n321.blog</title>
     <meta name="author" content="t2o0n321" />
     <meta name="description" content="t2o0n321 的部落格，記錄生活點滴、學習筆記、程式開發等。" />
     <meta name="keywords" content="" />
@@ -42,10 +42,6 @@
 
 
 <script src="/js/lib/preview.js"></script>
-
-
-
-
 
 
 
@@ -159,47 +155,65 @@
 </transition>
 
         <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
-            <div class="article">
-    <div>
-        <h1>歡迎光臨</h1>
-    </div>
-    <div class="info">
-        <span class="date">
-            <span class="icon">
-                <i class="fa-solid fa-calendar fa-fw"></i>
-            </span>
-            2025/6/9
-        </span>
+            <div id="archives">
+    
+    <div class="categories-tags">
         
         
-            <span class="tags">
+        
+        <span>
+            <a href="/tags/hexo/" style="background: linear-gradient(120deg, #9abbf7 0%, #ffbbf4 100%)">
                 <span class="icon">
                     <i class="fa-solid fa-tags fa-fw"></i>
                 </span>
-                
-                
-                <span class="tag">
-                    
-                    <a href="/tags/where-to-start/" style="color: #00bcd4">
-                        where-to-start
-                    </a>
+                hexo
+            </a>
+        </span>
+        
+        
+        
+        
+        
+        <span>
+            <a href="/tags/where-to-start/" style="background: #00a596">
+                <span class="icon">
+                    <i class="fa-solid fa-tags fa-fw"></i>
                 </span>
-                
-            </span>
+                where-to-start
+            </a>
+        </span>
+        
         
     </div>
     
-    <div class="content" v-pre>
-        <h1 id="關於我"><a href="#關於我" class="headerlink" title="關於我"></a>關於我</h1><p>也沒啥啦～</p>
-<h1 id="內容"><a href="#內容" class="headerlink" title="內容"></a>內容</h1><p>這邊會很多我的廢話和程式開發相關的文章並記錄生活的點點滴滴，所以看了會不嘻嘻的可以先左轉離開囉 😘</p>
-
+    <div class="timeline">
+        <div class="timeline-tail"></div>
+        <div class="timeline-content">
+            <div class="item-time">2025/6/9</div>
+            <a href="/2025/06/09/hexo-setup/">
+                <h3>hexo-setup</h3>
+            </a>
+            <div class="info">
+                
+                
+                <span class="tags">
+                    <span class="icon">
+                        <i class="fa-solid fa-tags fa-fw"></i>
+                    </span>
+                    
+                    
+                    <span class="tag">
+                        
+                        <a href="/tags/hexo/" style="color: #00a596">
+                            hexo
+                        </a>
+                    </span>
+                    
+                </span>
+                
+            </div>
+        </div>
     </div>
-    
-    
-    
-    
-    
-    
     
 </div>
 
@@ -231,12 +245,6 @@
         
     </div>
     <script src="/js/main.js"></script>
-    
-    
-
-
-
-
     
 </body>
 </html>
