@@ -12,11 +12,11 @@
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
     />
     <link rel="icon" href="/images/avatar.gif" />
-    <link rel="preconnect" href="https://s4.zstatic.net" />
-<script src="https://s4.zstatic.net/ajax/libs/vue/3.3.7/vue.global.prod.min.js"></script>
-<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
-<link rel="preconnect" href="https://fonts.googleapis.cn" />
-<link rel="preconnect" href="https://fonts.gstatic.cn" crossorigin />
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.5.13/vue.global.prod.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link
     rel="stylesheet"
     href="https://fonts.googleapis.cn/css2?family=Fira+Code:wght@400;500;600;700&family=Lexend:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;600;700;800;900&display=swap"
@@ -26,8 +26,10 @@
 <script src="https://polyfill.alicdn.com/v3/polyfill.min.js?features=default"></script>
 
 
-<script src="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-<script src="https://s4.zstatic.net/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.6.0/highlightjs-line-numbers.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/default.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/bash.min.js"></script>
 <link
     rel="stylesheet"
     href="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/styles/github.min.css"
@@ -35,9 +37,9 @@
 <script src="/js/lib/highlight.js"></script>
 
 
-<script src="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
-<script src="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
-<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" />
 <script src="/js/lib/math.js"></script>
 
 
@@ -203,141 +205,164 @@
     <div class="description">
         <div class="content" v-pre>
             
-            <p>畢竟這個部落格式使用 <a target="_blank" rel="noopener" href="https://hexo.io/zh-tw/">Hexo</a> 架設的，所以本篇會講述如何設定好一個部落格的解析伺服器，並將文章部署到 <a href="github.io">github.io</a>。</p>
-<h1 id="Table-of-Contents"><a href="#Table-of-Contents" class="headerlink" title="Table of Contents"></a>Table of Contents</h1><ul>
-<li><a href="#%E5%BB%BA%E7%BD%AE%E7%92%B0%E5%A2%83">建置環境</a></li>
-<li><a href="#%E5%AE%89%E8%A3%9D-nodejs">安裝 Node.js</a></li>
-<li><a href="#%E5%AE%89%E8%A3%9D-hexo-cli">安裝 <code>hexo-cli</code></a></li>
-<li><a href="#%E4%BD%BF%E7%94%A8%E4%B8%BB%E9%A1%8C">使用主題</a><ul>
-<li><a href="#%E5%AE%89%E8%A3%9D-particlex">安裝 ParticleX</a></li>
-<li><a href="#%E6%96%B0%E5%A2%9E%E5%B0%8E%E8%A6%BD%E9%A0%81%E9%9D%A2">新增導覽頁面</a></li>
-<li><a href="#%E5%BB%BA%E7%AB%8B%E6%96%B0%E6%96%87%E7%AB%A0">建立新文章</a></li>
-<li><a href="#%E5%A4%A7%E5%8A%9F%E5%91%8A%E6%88%90%E6%9F%A5%E7%9C%8B%E7%B5%90%E6%9E%9C">大功告成，查看結果</a></li>
-<li><a href="#%E9%83%A8%E7%BD%B2%E5%88%B0-githubio">部署到 github.io</a></li>
+            <p>畢竟這個部落格式使用 <a target="_blank" rel="noopener" href="https://hexo.io/zh-tw/">Hexo</a>
+架設的，所以本篇會講述如何設定好一個部落格的解析伺服器，並將文章部署到
+<a href="github.io">github.io</a>。</p>
+<h1 id="table-of-contents">Table of Contents</h1>
+<ul>
+<li><a href="#建置環境">建置環境</a></li>
+<li><a href="#安裝-nodejs">安裝 Node.js</a></li>
+<li><a href="#安裝-hexo-cli">安裝 <code>hexo-cli</code></a></li>
+<li><a href="#使用主題">使用主題</a>
+<ul>
+<li><a href="#安裝-particlex">安裝 ParticleX</a></li>
+<li><a href="#新增導覽頁面">新增導覽頁面</a></li>
+<li><a href="#建立新文章">建立新文章</a></li>
+<li><a href="#大功告成查看結果">大功告成，查看結果</a></li>
+<li><a href="#部署到-githubio">部署到 github.io</a></li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h1 id="建置環境"><a href="#建置環境" class="headerlink" title="建置環境"></a>建置環境</h1><ul>
-<li><strong>Ubuntu</strong><pre><code class="language-bash">┌─[t2o0n321@ubuntu24] - [~/blog] - [2025-06-09 06:50:32]
-└─[0] &lt;&gt; lsb_release -a
-No LSB modules are available.
-Distributor ID: Ubuntu
-Description:    Ubuntu 24.04.2 LTS
-Release:        24.04
-Codename:       noble
-</code></pre>
-</li>
-<li><strong>Node.js</strong><pre><code class="language-bash">┌─[t2o0n321@ubuntu24] - [~/blog] - [2025-06-09 06:57:44]
-└─[0] &lt;&gt; node -v 
-v24.1.0
-┌─[t2o0n321@ubuntu24] - [~/blog] - [2025-06-09 06:57:51]
-└─[0] &lt;&gt; npm --version                       
-11.3.0
-</code></pre>
-</li>
-</ul>
-<h1 id="安裝-Node-js"><a href="#安裝-Node-js" class="headerlink" title="安裝 Node.js"></a>安裝 Node.js</h1><p>Hexo 使用 Node.js 進行開發，所以理所當然我們需要擁有它的環境，以下使用 NVM 進行安裝：</p>
-<pre><code class="language-bash"># Download and install nvm:
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
-
-# in lieu of restarting the shell
-\. &quot;$HOME/.nvm/nvm.sh&quot;
-
-# Download and install Node.js:
-nvm install 24
-
-# Verify the Node.js version:
-node -v # Should print &quot;v24.1.0&quot;.
-nvm current # Should print &quot;v24.1.0&quot;.
-
-# Verify npm version:
-npm -v # Should print &quot;11.3.0&quot;.
-
-nvm use 24
-</code></pre>
-<h1 id="安裝-hexo-cli"><a href="#安裝-hexo-cli" class="headerlink" title="安裝 hexo-cli"></a>安裝 <code>hexo-cli</code></h1><pre><code class="language-bash">npm install hexo-cli -g
-mkdir blog
-cd blog
-hexo init
-npm install
-</code></pre>
-<h1 id="使用主題"><a href="#使用主題" class="headerlink" title="使用主題"></a>使用主題</h1><p>主題可以至<a target="_blank" rel="noopener" href="https://hexo.io/themes/">官方網站</a>尋找想要的，以下我會使用 <a target="_blank" rel="noopener" href="https://github.com/theme-particlex/hexo-theme-particlex">ParticleX</a>：</p>
-<h2 id="安裝-ParticleX"><a href="#安裝-ParticleX" class="headerlink" title="安裝 ParticleX"></a>安裝 ParticleX</h2><p>將 repo clone 至 <code>themes/</code>：</p>
-<pre><code class="language-bash">cd themes
-git clone https://github.com/theme-particlex/hexo-theme-particlex.git particlex --depth=1
-</code></pre>
-<p>然後將根目錄的 <code>_config.yml</code> 裡面的 <code>theme</code> section 更改成 ParticleX 即可：</p>
-<pre><code class="language-yaml">theme: particlex
-</code></pre>
-<p>關閉 Hexo 的自帶程式碼 Highlight 功能，更改根目錄的 <code>_config.yml</code> 的 <code>syntax_highlighter</code> 為以下：</p>
-<pre><code class="language-yaml">syntax_highlighter:
-</code></pre>
-<p>使用 Hexo 自帶的歸檔功能，在根目錄的 <code>_config.yml</code> 最底下加入：</p>
-<pre><code class="language-yaml">archive_generator:
-    enabled: true
-    per_page: 0
-    yearly: false
-    monthly: false
-    daily: false
-</code></pre>
+<h1 id="建置環境">建置環境</h1>
+<p><strong>Ubuntu</strong></p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">┌─[t2o0n321@ubuntu24]</span> <span class="at">-</span> <span class="pp">[</span><span class="ss">~/blog</span><span class="pp">]</span> <span class="at">-</span> [2025-06-09 06:50:32]</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">└─[0]</span> <span class="op">&lt;&gt;</span> lsb_release <span class="at">-a</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">No</span> LSB modules are available.</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Distributor</span> ID: Ubuntu</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Description:</span>    Ubuntu 24.04.2 LTS</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">Release:</span>        24.04</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="ex">Codename:</span>       noble</span></code></pre></div>
+<p><strong>Node.js</strong></p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">┌─[t2o0n321@ubuntu24]</span> <span class="at">-</span> <span class="pp">[</span><span class="ss">~/blog</span><span class="pp">]</span> <span class="at">-</span> [2025-06-09 06:57:44]</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">└─[0]</span> <span class="op">&lt;&gt;</span> node <span class="at">-v</span> </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ex">v24.1.0</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="ex">┌─[t2o0n321@ubuntu24]</span> <span class="at">-</span> <span class="pp">[</span><span class="ss">~/blog</span><span class="pp">]</span> <span class="at">-</span> [2025-06-09 06:57:51]</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="ex">└─[0]</span> <span class="op">&lt;&gt;</span> npm <span class="at">--version</span>                       </span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="ex">11.3.0</span></span></code></pre></div>
+<h1 id="安裝-node.js">安裝 Node.js</h1>
+<p>Hexo 使用 Node.js
+進行開發，所以理所當然我們需要擁有它的環境，以下使用 NVM 進行安裝：</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Download and install nvm:</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-o-</span> https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh <span class="kw">|</span> <span class="fu">bash</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># in lieu of restarting the shell</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="ex">\.</span> <span class="st">&quot;</span><span class="va">$HOME</span><span class="st">/.nvm/nvm.sh&quot;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Download and install Node.js:</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="ex">nvm</span> install 24</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Verify the Node.js version:</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="ex">node</span> <span class="at">-v</span> <span class="co"># Should print &quot;v24.1.0&quot;.</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="ex">nvm</span> current <span class="co"># Should print &quot;v24.1.0&quot;.</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Verify npm version:</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> <span class="at">-v</span> <span class="co"># Should print &quot;11.3.0&quot;.</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="ex">nvm</span> use 24</span></code></pre></div>
+<h1 id="安裝-hexo-cli">安裝 <code>hexo-cli</code></h1>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> install hexo-cli <span class="at">-g</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> blog</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> blog</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="ex">hexo</span> init</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> install</span></code></pre></div>
+<h1 id="使用主題">使用主題</h1>
+<p>主題可以至<a
+target="_blank" rel="noopener" href="https://hexo.io/themes/">官方網站</a>尋找想要的，以下我會使用 <a
+target="_blank" rel="noopener" href="https://github.com/theme-particlex/hexo-theme-particlex">ParticleX</a>：</p>
+<h2 id="安裝-particlex">安裝 ParticleX</h2>
+<p>將 repo clone 至 <code>themes/</code>：</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> themes</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/theme-particlex/hexo-theme-particlex.git particlex <span class="at">--depth</span><span class="op">=</span>1</span></code></pre></div>
+<p>然後將根目錄的 <code>_config.yml</code> 裡面的 <code>theme</code>
+section 更改成 ParticleX 即可：</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">theme</span><span class="kw">:</span><span class="at"> particlex</span></span></code></pre></div>
+<p>關閉 Hexo 的自帶程式碼 Highlight 功能，更改根目錄的
+<code>_config.yml</code> 的 <code>syntax_highlighter</code> 為以下：</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">syntax_highlighter</span><span class="kw">:</span></span></code></pre></div>
+<p>使用 Hexo 自帶的歸檔功能，在根目錄的 <code>_config.yml</code>
+最底下加入：</p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">archive_generator</span><span class="kw">:</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">enabled</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">per_page</span><span class="kw">:</span><span class="at"> </span><span class="dv">0</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">yearly</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">monthly</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">daily</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span></code></pre></div>
 <p>清除暫存資料：</p>
-<pre><code class="language-bash">hexo clean
-</code></pre>
-<p>其他設定可以自行參考 Project 的 README，我必較懶，所以就不多贅述了😂</p>
-<h2 id="新增導覽頁面"><a href="#新增導覽頁面" class="headerlink" title="新增導覽頁面"></a>新增導覽頁面</h2><p>為了應對 ParticleX 自帶的頁面，我們要加入以下：</p>
-<pre><code class="language-bash">hexo new page tags
-hexo new page about
-hexo new page categories
-</code></pre>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">hexo</span> clean</span></code></pre></div>
+<p>其他設定可以自行參考 Project 的
+README，我必較懶，所以就不多贅述了😂</p>
+<h2 id="新增導覽頁面">新增導覽頁面</h2>
+<p>為了應對 ParticleX 自帶的頁面，我們要加入以下：</p>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">hexo</span> new page tags</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="ex">hexo</span> new page about</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="ex">hexo</span> new page categories</span></code></pre></div>
 <p>加入後重新產生靜態網頁資料：</p>
-<pre><code class="language-bash">hexo generate
-</code></pre>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">hexo</span> generate</span></code></pre></div>
 <p>但是我一直遇到以下錯誤：</p>
-<pre><code class="language-log">Unhandled rejection TypeError: /home/t2o0n321/blog/themes/particlex/layout/post.ejs:22
+<pre class="shell"><code>Unhandled rejection TypeError: /home/t2o0n321/blog/themes/particlex/layout/post.ejs:22
     20|         &lt;/span&gt;
     21|         &lt;% &#125; %&gt;
  &gt;&gt; 22|         &lt;% if (page.tags &amp;&amp; page.tags.data.length !== 0) &#123; %&gt;
     23|         &lt;span class=&quot;tags&quot;&gt;
     24|             &lt;span class=&quot;icon&quot;&gt;
-    25|                 &lt;i class=&quot;fa-solid fa-tags fa-fw&quot;&gt;&lt;/i&gt;
-</code></pre>
-<p>為了避免這個問題，我們要將 <code>themes/particlex/layout/post.ejs</code> 的 <code>&lt;% if (page.tags &amp;&amp; page.tags.data &amp;&amp; page.tags.data.length !== 0) &#123; %&gt;</code> 修改成以下的樣子：</p>
-<pre><code class="language-ejs">&lt;% if (page.tags &amp;&amp; page.tags.data &amp;&amp; page.tags.data.length !== 0) &#123; %&gt;
-    &lt;span class=&quot;tags&quot;&gt;
-        &lt;span class=&quot;icon&quot;&gt;
-            &lt;i class=&quot;fa-solid fa-tags fa-fw&quot;&gt;&lt;/i&gt;
-        &lt;/span&gt;
-        &lt;% let prev; %&gt;
-        &lt;% page.tags.data.forEach((tag) =&gt; &#123; %&gt;
-        &lt;span class=&quot;tag&quot;&gt;
-            &lt;%
-                const colors = theme.colors.filter((color) =&gt; color !== prev);
-                let id = Math.floor(Math.random() * colors.length);
-                prev = colors[id];
-            %&gt;
-            &lt;a href=&quot;&lt;%- url_for(tag.path) %&gt;&quot; style=&quot;color: &lt;%- colors[id] %&gt;&quot;&gt;
-                &lt;%= tag.name %&gt;
-            &lt;/a&gt;
-        &lt;/span&gt;
-        &lt;% &#125;); %&gt;
-    &lt;/span&gt;
-&lt;% &#125; %&gt;
-</code></pre>
-<h2 id="建立新文章"><a href="#建立新文章" class="headerlink" title="建立新文章"></a>建立新文章</h2><pre><code class="language-bash">hexo new [name_of_article]
-</code></pre>
-<h2 id="大功告成，查看結果"><a href="#大功告成，查看結果" class="headerlink" title="大功告成，查看結果"></a>大功告成，查看結果</h2><p>使用 <code>hexo clean</code> 和 <code>hexo generate</code> 刷新後，發現沒有問題就可以打開模擬伺服器看看結果了：</p>
-<pre><code class="language-bash">hexo server
-</code></pre>
-<h2 id="部署到-github-io"><a href="#部署到-github-io" class="headerlink" title="部署到 github.io"></a>部署到 github.io</h2><p>這邊先提醒一下，之前沒有設定過 github.io 的人，可以先參考 <a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/m/articles/10272520">guitimliu 大大的文章</a>設定，以下的操作預設你已設定好了。<br/></p>
-<p>在根目錄的 <code>_config.yml</code> 修改 <code>deploy</code> 的欄位：</p>
-<pre><code class="language-yaml"># Deployment
-## Docs: https://hexo.io/docs/one-command-deployment
-deploy:
-  type: git
-  repo: https://github.com/[your_username]/[your_username].github.io.git
-  branch: [your_branch]
-  message: &#39;Deploy from Hexo&#39;
-</code></pre>
+    25|                 &lt;i class=&quot;fa-solid fa-tags fa-fw&quot;&gt;&lt;/i&gt;</code></pre>
+<p>為了避免這個問題，我們要將
+<code>themes/particlex/layout/post.ejs</code> 的
+<code>&lt;% if (page.tags &amp;&amp; page.tags.data &amp;&amp; page.tags.data.length !== 0) &#123; %&gt;</code>
+修改成以下的樣子：</p>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode html"><code class="sourceCode html"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="er">&lt;</span>% if (page.tags <span class="er">&amp;&amp;</span> page.tags.data <span class="er">&amp;&amp;</span> page.tags.data.length !== 0) &#123; %&gt;</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">span</span> <span class="er">class</span><span class="ot">=</span><span class="st">&quot;tags&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">span</span> <span class="er">class</span><span class="ot">=</span><span class="st">&quot;icon&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>            <span class="dt">&lt;</span><span class="kw">i</span> <span class="er">class</span><span class="ot">=</span><span class="st">&quot;fa-solid fa-tags fa-fw&quot;</span><span class="dt">&gt;&lt;/</span><span class="kw">i</span><span class="dt">&gt;</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>        <span class="er">&lt;</span>% let prev; %&gt;</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>        <span class="er">&lt;</span>% page.tags.data.forEach((tag) =&gt; &#123; %&gt;</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">span</span> <span class="er">class</span><span class="ot">=</span><span class="st">&quot;tag&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>            <span class="er">&lt;</span>%</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>                const colors = theme.colors.filter((color) =&gt; color !== prev);</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>                let id = Math.floor(Math.random() * colors.length);</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>                prev = colors[id];</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>            %&gt;</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>            <span class="dt">&lt;</span><span class="kw">a</span> <span class="er">href</span><span class="ot">=</span><span class="st">&quot;</span><span class="er">&lt;</span><span class="st">%- url_for(tag.path) %&gt;&quot;</span> <span class="er">style</span><span class="ot">=</span><span class="st">&quot;color: </span><span class="er">&lt;</span><span class="st">%- colors[id] %&gt;&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>                <span class="er">&lt;</span>%= tag.name %&gt;</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>            <span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>        <span class="er">&lt;</span>% &#125;); %&gt;</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a><span class="er">&lt;</span>% &#125; %&gt;</span></code></pre></div>
+<h2 id="建立新文章">建立新文章</h2>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">hexo</span> new <span class="pp">[</span><span class="ss">name_of_article</span><span class="pp">]</span></span></code></pre></div>
+<h2 id="大功告成查看結果">大功告成，查看結果</h2>
+<p>使用 <code>hexo clean</code> 和 <code>hexo generate</code>
+刷新後，發現沒有問題就可以打開模擬伺服器看看結果了：</p>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">hexo</span> server</span></code></pre></div>
+<h2 id="部署到-github.io">部署到 github.io</h2>
+<p>這邊先提醒一下，之前沒有設定過 github.io 的人，可以先參考 <a
+target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/m/articles/10272520">guitimliu
+大大的文章</a>設定，以下的操作預設你已設定好了。<br/></p>
+<p>在根目錄的 <code>_config.yml</code> 修改 <code>deploy</code>
+的欄位：</p>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Deployment</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co">## Docs: https://hexo.io/docs/one-command-deployment</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">deploy</span><span class="kw">:</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">type</span><span class="kw">:</span><span class="at"> git</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">repo</span><span class="kw">:</span><span class="at"> https://github.com/[your_username]/[your_username].github.io.git</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">branch</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">your_branch</span><span class="kw">]</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">message</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;Deploy from Hexo&#39;</span></span></code></pre></div>
 <ul>
 <li><code>type</code>：部署類型</li>
 <li><code>repo</code>：儲存庫 clone</li>
@@ -345,11 +370,11 @@ deploy:
 <li><code>message</code>：Commit 訊息</li>
 </ul>
 <p>安裝必要插件：</p>
-<pre><code class="language-bash">npm install hexo-deployer-git --save
-</code></pre>
+<div class="sourceCode" id="cb17"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> install hexo-deployer-git <span class="at">--save</span></span></code></pre></div>
 <p>將靜態檔案推上去：</p>
-<pre><code class="language-bash">hexo d
-</code></pre>
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">hexo</span> d</span></code></pre></div>
 
             
         </div>
@@ -364,7 +389,7 @@ deploy:
         
         <span class="tag">
             
-            <a href="/tags/hexo/" style="color: #ffa2c4">hexo</a>
+            <a href="/tags/hexo/" style="color: #00a596">hexo</a>
         </span>
         
     </div>
@@ -389,8 +414,11 @@ deploy:
     <div class="description">
         <div class="content" v-pre>
             
-            <h1 id="關於我"><a href="#關於我" class="headerlink" title="關於我"></a>關於我</h1><p>也沒啥啦～</p>
-<h1 id="內容"><a href="#內容" class="headerlink" title="內容"></a>內容</h1><p>這邊會很多我的廢話和程式開發相關的文章並記錄生活的點點滴滴，所以看了會不嘻嘻的可以先左轉離開囉 😘</p>
+            <h1 id="關於我">關於我</h1>
+<p>也沒啥啦～</p>
+<h1 id="內容">內容</h1>
+<p>這邊會很多我的廢話和程式開發相關的文章並記錄生活的點點滴滴，所以看了會不嘻嘻的可以先左轉離開囉
+😘</p>
 
             
         </div>
@@ -405,7 +433,7 @@ deploy:
         
         <span class="tag">
             
-            <a href="/tags/where-to-start/" style="color: #00bcd4">where-to-start</a>
+            <a href="/tags/where-to-start/" style="color: #03a9f4">where-to-start</a>
         </span>
         
     </div>
@@ -432,7 +460,7 @@ deploy:
         </div>
         <div class="name">t2o0n321</div>
         <div class="description">
-            <p>Description<br>好想睡覺想睡覺…🐭</p>
+            <p>Description 好想睡覺想睡覺…🐭</p>
 
         </div>
         

@@ -14,20 +14,24 @@ mixins.highlight = {
             let codes = document.querySelectorAll("pre");
             for (let i of codes) {
                 let code = i.textContent;
-                let language = [...i.classList, ...i.firstChild.classList][0] || "plaintext";
+                let language = i.classList[i.classList.length - 1];
+                if (language === 'sourceCode') {
+                    language = 'plaintext';
+                }
                 let highlighted;
                 try {
                     highlighted = hljs.highlight(code, { language }).value;
-                } catch {
+                } catch (e) {
+                    console.error('Highlighting failed for language:', language, e);
                     highlighted = code;
                 }
                 i.innerHTML = `
-                <div class="code-content hljs">${highlighted}</div>
-                <div class="language">${language}</div>
-                <div class="copycode">
-                    <i class="fa-solid fa-copy fa-fw"></i>
-                    <i class="fa-solid fa-check fa-fw"></i>
-                </div>
+                    <div class="code-content hljs">${highlighted}</div>
+                    <div class="language">${language}</div>
+                    <div class="copycode">
+                        <i class="fa-solid fa-copy fa-fw"></i>
+                        <i class="fa-solid fa-check fa-fw"></i>
+                    </div>
                 `;
                 let content = i.querySelector(".code-content");
                 hljs.lineNumbersBlock(content, { singleLine: true });
