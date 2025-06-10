@@ -182,7 +182,7 @@
                 
                 <span class="tag">
                     
-                    <a href="/tags/crypto-currencies/" style="color: #ff7d73">
+                    <a href="/tags/crypto-currencies/" style="color: #ffa2c4">
                         crypto-currencies
                     </a>
                 </span>
@@ -266,12 +266,15 @@ target="_blank" rel="noopener" href="https://medium.com/learning-lab/how-to-lear
 (Cryptocurrency)，建議先閱讀以下文章：<br />
 <strong><a
 target="_blank" rel="noopener" href="https://medium.com/learning-lab/why-cryptocurrencies-matter-37dd736bc8d0?source=post_page-----95950c002b8f---------------------------------------">為什麼加密貨幣很重要？</a></strong></p>
-<p>加密貨幣 (Cryptocurrency) 由以下四個核心組成部分構成： 1.
-<strong>資料結構 (Data Structure)</strong>（大多數情況下是區塊鏈
-(Blockchain)） 2. <strong>加密學 (Cryptography)</strong> 3.
-<strong>運行節點的獎勵 (Node Incentives)</strong> 4.
-<strong>去中心化（點對點）共識 (Decentralized Peer-to-Peer
-Consensus)</strong></p>
+<p>加密貨幣 (Cryptocurrency) 由以下四個核心組成部分構成：</p>
+<ol type="1">
+<li><strong>資料結構 (Data Structure)</strong>（大多數情況下是區塊鏈
+(Blockchain)）</li>
+<li><strong>加密學 (Cryptography)</strong></li>
+<li><strong>運行節點的獎勵 (Node Incentives)</strong></li>
+<li><strong>去中心化（點對點）共識 (Decentralized Peer-to-Peer
+Consensus)</strong></li>
+</ol>
 <h2 id="加密雜湊函數-cryptographic-hash-function">加密雜湊函數
 (Cryptographic Hash Function)</h2>
 <p>在深入了解加密貨幣 (Cryptocurrency)
@@ -296,12 +299,16 @@ target="_blank" rel="noopener" href="https://jsfiddle.net/sandoche/e0jmqLok/">JS
 <p>大多數加密貨幣 (Cryptocurrency) 使用區塊鏈 (Blockchain)
 資料結構。顧名思義，區塊鏈 (Blockchain) 是由包含資料的區塊 (Block)
 串聯而成。簡單吧？😬😬</p>
-<p>以下是一個簡單區塊 (Block) 結構的範例： -
-<strong>previousHash</strong>：前一個區塊的雜湊值 (Hash) -
-<strong>timestamp</strong>：日期時間碼 (Timestamp) -
-<strong>data</strong>：在加密貨幣中，通常包含交易 (Transaction) 資料 -
-<strong>nonce</strong>：一個整數（用於挖礦 (Mining)，後面會解釋） -
-<strong>hash</strong>：當前區塊的雜湊值 (Hash)，計算方式如下：</p>
+<p>以下是一個簡單區塊 (Block) 結構的範例：</p>
+<ul>
+<li><strong>previousHash</strong>：前一個區塊的雜湊值 (Hash)</li>
+<li><strong>timestamp</strong>：日期時間碼 (Timestamp)</li>
+<li><strong>data</strong>：在加密貨幣中，通常包含交易 (Transaction)
+資料</li>
+<li><strong>nonce</strong>：一個整數（用於挖礦
+(Mining)，後面會解釋）</li>
+<li><strong>hash</strong>：當前區塊的雜湊值 (Hash)，計算方式如下：</li>
+</ul>
 <div class="sourceCode" id="cb1"><pre
 class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> hash <span class="op">=</span> <span class="fu">H</span>(previousHash <span class="op">+</span> timestamp <span class="op">+</span> data<span class="op">.</span><span class="fu">toString</span>() <span class="op">+</span> nonce)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">// H(x) 是雜湊函數 (Hash Function)</span></span>
@@ -346,28 +353,40 @@ Consensus)，幾乎不可能更改區塊鏈 (Blockchain) 中的資料。儲存�
 <p>現在我們了解了區塊鏈 (Blockchain)，接下來談談交易 (Transaction)
 及其處理方式。</p>
 <h3 id="交易-transaction">交易 (Transaction)</h3>
-<p>以下是交易 (Transaction) 創建前的結構： -
-<strong>transactionInputs[]</strong>：交易輸入 (Transaction Input) 陣列
-- <strong>transactionOutputs[]</strong>：交易輸出 (Transaction Output)
-陣列 - <strong>id</strong>：由 <code>transactionInputs[]</code> 和
-<code>transactionOutputs[]</code> 的內容計算出的雜湊值 (Hash)</p>
+<p>以下是交易 (Transaction) 創建前的結構：</p>
+<ul>
+<li><strong>transactionInputs[]</strong>：交易輸入 (Transaction Input)
+陣列</li>
+<li><strong>transactionOutputs[]</strong>：交易輸出 (Transaction Output)
+陣列</li>
+<li><strong>id</strong>：由 <code>transactionInputs[]</code> 和
+<code>transactionOutputs[]</code> 的內容計算出的雜湊值 (Hash)</li>
+</ul>
 <p>交易輸出 (Transaction Output) 和交易輸入 (Transaction Input)
 的結構如下：</p>
-<p><strong>transactionOutput</strong>： -
-<strong>address</strong>：交易接收者的地址 (Address) -
-<strong>amount</strong>：發送到該地址的加密貨幣數量</p>
-<p><strong>transactionInput</strong>： -
-<strong>transactionOutputId</strong>：之前交易的 ID/雜湊值
-(Hash)，作為輸入的來源 -
-<strong>transactionOutputIndex</strong>：用於查找
-<code>transactionOutputs[]</code> 陣列中正確輸出的索引</p>
+<p><strong>transactionOutput</strong>：</p>
+<ul>
+<li><strong>address</strong>：交易接收者的地址 (Address)</li>
+<li><strong>amount</strong>：發送到該地址的加密貨幣數量</li>
+</ul>
+<p><strong>transactionInput</strong>：</p>
+<ul>
+<li><strong>transactionOutputId</strong>：之前交易的 ID/雜湊值
+(Hash)，作為輸入的來源</li>
+<li><strong>transactionOutputIndex</strong>：用於查找
+<code>transactionOutputs[]</code> 陣列中正確輸出的索引</li>
+</ul>
 <p>交易 (Transaction)
 的規則是：<strong>每個交易的輸入總和必須等於輸出總和</strong>。例如，如果
 Alice 收到 30 個貨幣，想發送 10 個，她必須將剩餘的 20
 個發送給自己！這是比特幣 (Bitcoin)
 為了加快交易驗證而採用的方式，避免每次交易都檢查完整的歷史記錄。</p>
-<p>以下是一個範例： 假設有三個人： - Alice（地址：<code>0xA</code>） -
-John（地址：<code>0xJ</code>） - Bob（地址：<code>0xB</code>）</p>
+<p>以下是一個範例： 假設有三個人：</p>
+<ul>
+<li>Alice（地址：<code>0xA</code>）</li>
+<li>John（地址：<code>0xJ</code>）</li>
+<li>Bob（地址：<code>0xB</code>）</li>
+</ul>
 <p>這些地址是他們的公開金鑰 (Public Key)。Alice 擁有 30 個貨幣（來自
 John 在交易 ID <code>0x5645464</code> 中發送給她的），Bob 擁有 0
 個貨幣。Alice 想發送 10 個貨幣給 Bob。</p>
@@ -405,9 +424,12 @@ class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb2-
 使用<strong>橢圓曲線數位簽章演算法 (ECDSA, Elliptic Curve Digital
 Signature Algorithm)</strong> 來保護交易 (Transaction)
 安全，並生成公開金鑰 (Public Key) 和私密金鑰 (Private Key)。</p>
-<p>每個比特幣 (Bitcoin) 使用者需要兩把金鑰： - <strong>私密金鑰 (Private
-Key)</strong>（秘密金鑰） - <strong>公開金鑰 (Public
-Key)</strong>（用作地址 (Address)，也用於接收貨幣）</p>
+<p>每個比特幣 (Bitcoin) 使用者需要兩把金鑰：</p>
+<ul>
+<li><strong>私密金鑰 (Private Key)</strong>（秘密金鑰）</li>
+<li><strong>公開金鑰 (Public Key)</strong>（用作地址
+(Address)，也用於接收貨幣）</li>
+</ul>
 <p>私密金鑰 (Private Key) 是隨機生成的，公開金鑰 (Public Key) 則透過
 ECDSA 演算法生成。具體生成方式可參考：<a
 target="_blank" rel="noopener" href="https://bitcoin.stackexchange.com/questions/25024/how-do-you-get-a-bitcoin-public-key-from-a-private-key#29880">技術文章</a>（非常技術性）。</p>
@@ -640,19 +662,26 @@ target="_blank" rel="noopener" href="https://digiconomist.net/bitcoin-energy-con
 (Proof of Work) 更高效，甚至可以使用太陽能 🌞！</p>
 <h2 id="下一步-next-steps">下一步 (Next Steps)</h2>
 <p>這篇文章是我關於區塊鏈 (Blockchain) 與加密貨幣 (Cryptocurrency)
-學習挑戰的一部分。我還撰寫了以下相關文章： - <a
+學習挑戰的一部分。我還撰寫了以下相關文章：</p>
+<ul>
+<li><a
 target="_blank" rel="noopener" href="https://medium.com/learning-lab/why-cryptocurrencies-matter-37dd736bc8d0">為什麼加密貨幣很重要？
-(Why Cryptocurrencies Matter)</a> - <a
+(Why Cryptocurrencies Matter)</a></li>
+<li><a
 target="_blank" rel="noopener" href="https://medium.com/learning-lab/proof-of-what-understand-the-distributed-consensuses-in-blockchain-1d9304ae4afe">什麼是共識機制？
-(What is a Consensus Mechanism?)</a> - <a
+(What is a Consensus Mechanism?)</a></li>
+<li><a
 target="_blank" rel="noopener" href="https://medium.com/learning-lab/how-to-make-money-with-cryptocurrencies-9a6d4a08e976">如何通過加密貨幣賺錢？
-(How to Make Money with Cryptocurrencies)</a> - <a
+(How to Make Money with Cryptocurrencies)</a></li>
+<li><a
 target="_blank" rel="noopener" href="https://medium.com/learning-lab/how-i-integrated-blockchain-to-my-existing-product-kanbanote-c97c74dafb6c">如何將區塊鏈整合到現有產品（Kanbanote）？
-(How to Integrate Blockchain into an Existing Product (Kanbanote))</a> -
-<a
+(How to Integrate Blockchain into an Existing Product
+(Kanbanote))</a></li>
+<li><a
 target="_blank" rel="noopener" href="https://medium.com/learning-lab/how-to-build-your-own-cryptocurrency-proof-of-stake-in-just-a-few-minutes-6d526bca4a91">如何在幾分鐘內創建自己的權益證明加密貨幣？
 (How to Build Your Own Proof of Stake Cryptocurrency in Just a Few
-Minutes)</a></p>
+Minutes)</a></li>
+</ul>
 <p>如果您喜歡這篇文章，請點擊下面的拍手按鈕 👏
 幾次以示支持！也歡迎留言提供反饋。</p>
 <p>想看更多類似文章？請在 <a
