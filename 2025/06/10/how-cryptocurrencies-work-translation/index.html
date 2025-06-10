@@ -1,0 +1,715 @@
+
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="utf-8" />
+    <title>How Cryptocurrencies Work (Technical Guide) | t2o0n321.blog</title>
+    <meta name="author" content="t2o0n321" />
+    <meta name="description" content="t2o0n321 的部落格，記錄生活點滴、學習筆記、程式開發等。" />
+    <meta name="keywords" content="" />
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
+    <link rel="icon" href="/images/avatar.gif" />
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.5.13/vue.global.prod.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Lexend:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;600;700;800;900&display=swap"
+/>
+<script> const mixins = {}; </script>
+
+<script src="https://polyfill.alicdn.com/v3/polyfill.min.js?features=default"></script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.6.0/highlightjs-line-numbers.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/default.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/bash.min.js"></script>
+<link
+    rel="stylesheet"
+    href="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/styles/github.min.css"
+/>
+<script src="/js/lib/highlight.js"></script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" />
+<script src="/js/lib/math.js"></script>
+
+
+<script src="/js/lib/preview.js"></script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css" />
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body>
+    <div id="layout">
+        <transition name="fade">
+            <div id="loading" v-show="loading">
+                <div id="loading-circle">
+                    <h2>LOADING</h2>
+                    <p>載入過慢請開啟暫存 瀏覽器默認開啟</p>
+                    <img src="/images/loading.gif" />
+                </div>
+            </div>
+        </transition>
+        <div id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
+    <nav id="desktop-menu">
+        <a class="title" href="/">
+            <span>T2O0N321.BLOG</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;Home</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;About</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;Archives</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;Categories</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;Tags</span>
+        </a>
+        
+    </nav>
+    <nav id="mobile-menu">
+        <div class="title" @click="showMenuItems = !showMenuItems">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;T2O0N321.BLOG</span>
+        </div>
+        <transition name="slide">
+            <div class="items" v-show="showMenuItems">
+                
+                <a href="/">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-house fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Home</div>
+                    </div>
+                </a>
+                
+                <a href="/about">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-id-card fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">About</div>
+                    </div>
+                </a>
+                
+                <a href="/archives">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-box-archive fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Archives</div>
+                    </div>
+                </a>
+                
+                <a href="/categories">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-bookmark fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Categories</div>
+                    </div>
+                </a>
+                
+                <a href="/tags">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-tags fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
+                    </div>
+                </a>
+                
+            </div>
+        </transition>
+    </nav>
+</div>
+<transition name="fade">
+    <div id="menu-curtain" @click="showMenuItems = !showMenuItems" v-show="showMenuItems"></div>
+</transition>
+
+        <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
+            <div class="article">
+    <div>
+        <h1>How Cryptocurrencies Work (Technical Guide)</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2025/6/10
+        </span>
+        
+        
+            <span class="tags">
+                <span class="icon">
+                    <i class="fa-solid fa-tags fa-fw"></i>
+                </span>
+                
+                
+                <span class="tag">
+                    
+                    <a href="/tags/crypto-currencies/" style="color: #03a9f4">
+                        crypto-currencies
+                    </a>
+                </span>
+                
+            </span>
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <blockquote>
+<p>原文：https://medium.com/learning-lab/how-cryptocurrencies-work-technical-guide-95950c002b8f</p>
+</blockquote>
+<h2
+id="區塊鏈加密學與共識機制解析-blockchain-cryptography-and-consensus-mechanisms-explained">#9
+— 區塊鏈、加密學與共識機制解析 (Blockchain, Cryptography, and Consensus
+Mechanisms Explained)</h2>
+<p><strong>作者：Sandoche ADITTANE</strong><br />
+<strong>發布於：<a target="_blank" rel="noopener" href="https://medium.com/learning-lab">Learning
+Lab</a></strong><br />
+<strong>閱讀時間：15 分鐘</strong><br />
+<strong>發布日期：2018年5月8日</strong></p>
+<p><img
+src="https://miro.medium.com/v2/resize:fit:2000/format:webp/1*Gwi60Nw-SVS1q4kBxrf6sw.jpeg"
+alt="加密貨幣圖片" /><br />
+<em>圖片來源：<a target="_blank" rel="noopener" href="https://photos.icons8.com">Icons8
+Photos</a></em></p>
+<h2 id="目錄table-of-contents">📖 目錄（Table of Contents）</h2>
+<ul>
+<li><a href="#引言">引言</a></li>
+<li><a href="#加密雜湊函數-cryptographic-hash-function">加密雜湊函數</a>
+(Cryptographic Hash Function)</li>
+<li><a href="#資料結構-data-structure">資料結構</a> (Data Structure)
+<ul>
+<li><a href="#區塊-block">區塊</a> (Block)</li>
+<li><a href="#區塊鏈-blockchain">區塊鏈</a> (Blockchain)</li>
+</ul></li>
+<li><a
+href="#交易與加密學-transactions-and-cryptography">交易與加密學</a>
+(Transactions and Cryptography)
+<ul>
+<li><a href="#交易-transaction">交易</a> (Transaction)</li>
+<li><a href="#加密學-cryptography">加密學</a> (Cryptography)</li>
+</ul></li>
+<li><a href="#帳戶餘額-account-balance">帳戶餘額</a> (Account
+Balance)</li>
+<li><a
+href="#工作量證明與挖礦與難題-proof-of-work-mining-and-puzzle">工作量證明、挖礦與難題</a>
+(Proof of Work, Mining, and Puzzle)
+<ul>
+<li><a href="#工作量證明共識-proof-of-work-consensus">工作量證明共識</a>
+(Proof of Work Consensus)</li>
+</ul></li>
+<li><a
+href="#獎勵與交易費用-rewards-and-transaction-fees">獎勵與交易費用</a>
+(Rewards and Transaction Fees)</li>
+<li><a href="#確認與分支-confirmation-and-fork">確認與分支</a>
+(Confirmation and Fork)</li>
+<li><a
+href="#整體流程簡介3-分鐘-overview-of-the-process-3-minutes">整體流程簡介（3
+分鐘）</a> (Overview of the Process)</li>
+<li><a
+href="#分散式共識與挖礦替代方案-distributed-consensus-and-mining-alternatives">分散式共識與挖礦替代方案</a>
+(Distributed Consensus and Mining Alternatives)</li>
+<li><a
+href="#加密貨幣面臨的挑戰-challenges-facing-cryptocurrencies">加密貨幣面臨的挑戰</a>
+(Challenges Facing Cryptocurrencies)</li>
+<li><a href="#下一步-next-steps">下一步</a> (Next Steps)</li>
+</ul>
+<h2 id="引言">引言</h2>
+<p>加密貨幣 (Cryptocurrency) 是一個相當複雜的主題。如果你想知道交易
+(Transaction) 背後的運作原理、什麼是區塊鏈 (Blockchain)、挖礦 (Mining)
+的目的是什麼，或者加密貨幣的限制在哪裡，這篇文章將為你解答！它將詳細解釋加密貨幣的各個組成部分
+😃。</p>
+<p>這篇文章是我學習挑戰的一部分，我每個月學習一個主題。本月的主題是區塊鏈
+(Blockchain) 與加密貨幣 (Cryptocurrency)。我的學習內容基於 <a
+target="_blank" rel="noopener" href="https://www.coursera.org/">Coursera 的 MOOC
+課程</a>、幾篇文章、白皮書，以及我自己開發的權益證明 (Proof of Stake)
+加密貨幣和貨幣生成器。如果你想了解更多關於我的學習方法，請點擊<a
+target="_blank" rel="noopener" href="https://medium.com/learning-lab/how-to-learn-one-topic-every-month-3f6a695b4b8b">這裡</a>。</p>
+<p>如果你不了解什麼是加密貨幣
+(Cryptocurrency)，建議先閱讀以下文章：<br />
+<strong><a
+target="_blank" rel="noopener" href="https://medium.com/learning-lab/why-cryptocurrencies-matter-37dd736bc8d0?source=post_page-----95950c002b8f---------------------------------------">為什麼加密貨幣很重要？</a></strong></p>
+<p>加密貨幣 (Cryptocurrency) 由以下四個核心組成部分構成： 1.
+<strong>資料結構 (Data Structure)</strong>（大多數情況下是區塊鏈
+(Blockchain)） 2. <strong>加密學 (Cryptography)</strong> 3.
+<strong>運行節點的獎勵 (Node Incentives)</strong> 4.
+<strong>去中心化（點對點）共識 (Decentralized Peer-to-Peer
+Consensus)</strong></p>
+<h2 id="加密雜湊函數-cryptographic-hash-function">加密雜湊函數
+(Cryptographic Hash Function)</h2>
+<p>在深入了解加密貨幣 (Cryptocurrency)
+之前，我們先來看看加密貨幣的核心元素之一：<strong>加密雜湊函數
+(Cryptographic Hash
+Function)</strong>。它在加密貨幣中有多種用途，例如作為識別碼或驗證資料未被修改。</p>
+<blockquote>
+<p>加密雜湊函數 (Cryptographic Hash Function)
+是一種數學演算法，將任意大小的資料映射到固定大小的位元串（雜湊值
+(Hash)），並設計為單向函數，幾乎無法逆向推導。（來源：<a
+target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Cryptographic_hash_function">維基百科</a>）</p>
+</blockquote>
+<p>常見的加密雜湊函數 (Cryptographic Hash Function) 包括 SHA-256、Scrypt
+和 X11（使用 11 種不同的雜湊函數）。<br />
+你可以在這裡測試 SHA-256：<a
+target="_blank" rel="noopener" href="https://jsfiddle.net/sandoche/e0jmqLok/">JSFiddle</a>.</p>
+<h2 id="資料結構-data-structure">資料結構 (Data Structure)</h2>
+<p>資料結構 (Data Structure) 是每種加密貨幣 (Cryptocurrency)
+的骨架。我們來談談最著名的資料結構：<strong>區塊鏈
+(Blockchain)</strong>。</p>
+<h3 id="區塊-block">區塊 (Block)</h3>
+<p>大多數加密貨幣 (Cryptocurrency) 使用區塊鏈 (Blockchain)
+資料結構。顧名思義，區塊鏈 (Blockchain) 是由包含資料的區塊 (Block)
+串聯而成。簡單吧？😬😬</p>
+<p>以下是一個簡單區塊 (Block) 結構的範例： -
+<strong>previousHash</strong>：前一個區塊的雜湊值 (Hash) -
+<strong>timestamp</strong>：日期時間碼 (Timestamp) -
+<strong>data</strong>：在加密貨幣中，通常包含交易 (Transaction) 資料 -
+<strong>nonce</strong>：一個整數（用於挖礦 (Mining)，後面會解釋） -
+<strong>hash</strong>：當前區塊的雜湊值 (Hash)，計算方式如下：</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> hash <span class="op">=</span> <span class="fu">H</span>(previousHash <span class="op">+</span> timestamp <span class="op">+</span> data<span class="op">.</span><span class="fu">toString</span>() <span class="op">+</span> nonce)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">// H(x) 是雜湊函數 (Hash Function)</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">// + 表示串聯</span></span></code></pre></div>
+<p>請注意，某些加密貨幣 (Cryptocurrency) 會在雜湊值 (Hash) 或地址
+(Address) 前加上前綴，以區分不同的貨幣。</p>
+<h3 id="區塊鏈-blockchain">區塊鏈 (Blockchain)</h3>
+<p>了解了區塊 (Block) 結構後，區塊鏈 (Blockchain)
+的概念就更簡單了。區塊鏈 (Blockchain) 看起來像這樣：</p>
+<figure>
+<img
+src="https://miro.medium.com/v2/resize:fit:2000/format:webp/1*ATo4tS9ZYxM_IA7IdTfF7A.png"
+alt="區塊鏈結構" />
+<figcaption aria-hidden="true">區塊鏈結構</figcaption>
+</figure>
+<p>這種資料結構的強大之處在於，如果你更改某個區塊 (Block)
+的資料，必須重新計算該區塊的雜湊值 (Hash)，這會使下一個區塊的
+<code>previousHash</code> 失效。如下圖所示：</p>
+<figure>
+<img
+src="https://miro.medium.com/v2/resize:fit:2000/format:webp/1*NmHIJUIgrr4WLboV3uRLxQ.png"
+alt="區塊資料更改的影響" />
+<figcaption aria-hidden="true">區塊資料更改的影響</figcaption>
+</figure>
+<p>特別的是，第一個區塊沒有
+<code>previousHash</code>，稱為<strong>創世區塊 (Genesis
+Block)</strong>。</p>
+<p>區塊鏈 (Blockchain) 資料結構被大多數加密貨幣（如比特幣
+(Bitcoin)、萊特幣 (Litecoin)、以太坊 (Ethereum)）使用。後續的共識機制
+(Consensus Mechanism) 部分將介紹其他使用不同資料結構的加密貨幣。</p>
+<p>由於這種結構結合了良好的去中心化共識 (Decentralized
+Consensus)，幾乎不可能更改區塊鏈 (Blockchain) 中的資料。儲存在區塊鏈
+(Blockchain) 中的資料將永遠存在，幾乎無法被移除 😮。</p>
+<p>此外，任何類型的資料都可以使用這種資料結構儲存。比特幣 (Bitcoin) 使用
+<a target="_blank" rel="noopener" href="https://github.com/google/leveldb">LevelDB</a>（一種鍵值儲存庫
+(Key-Value Store)）來儲存區塊鏈 (Blockchain) 資料，因為區塊透過雜湊值
+(Hash) 識別，鍵值儲存是最適合的解決方案。</p>
+<p>通過將交易 (Transaction) 添加到區塊鏈 (Blockchain) 的區塊 (Block)
+中，你可以將其轉化為一個<strong>分類帳 (Ledger)</strong>。</p>
+<h2 id="交易與加密學-transactions-and-cryptography">交易與加密學
+(Transactions and Cryptography)</h2>
+<p>現在我們了解了區塊鏈 (Blockchain)，接下來談談交易 (Transaction)
+及其處理方式。</p>
+<h3 id="交易-transaction">交易 (Transaction)</h3>
+<p>以下是交易 (Transaction) 創建前的結構： -
+<strong>transactionInputs[]</strong>：交易輸入 (Transaction Input) 陣列
+- <strong>transactionOutputs[]</strong>：交易輸出 (Transaction Output)
+陣列 - <strong>id</strong>：由 <code>transactionInputs[]</code> 和
+<code>transactionOutputs[]</code> 的內容計算出的雜湊值 (Hash)</p>
+<p>交易輸出 (Transaction Output) 和交易輸入 (Transaction Input)
+的結構如下：</p>
+<p><strong>transactionOutput</strong>： -
+<strong>address</strong>：交易接收者的地址 (Address) -
+<strong>amount</strong>：發送到該地址的加密貨幣數量</p>
+<p><strong>transactionInput</strong>： -
+<strong>transactionOutputId</strong>：之前交易的 ID/雜湊值
+(Hash)，作為輸入的來源 -
+<strong>transactionOutputIndex</strong>：用於查找
+<code>transactionOutputs[]</code> 陣列中正確輸出的索引</p>
+<p>交易 (Transaction)
+的規則是：<strong>每個交易的輸入總和必須等於輸出總和</strong>。例如，如果
+Alice 收到 30 個貨幣，想發送 10 個，她必須將剩餘的 20
+個發送給自己！這是比特幣 (Bitcoin)
+為了加快交易驗證而採用的方式，避免每次交易都檢查完整的歷史記錄。</p>
+<p>以下是一個範例： 假設有三個人： - Alice（地址：<code>0xA</code>） -
+John（地址：<code>0xJ</code>） - Bob（地址：<code>0xB</code>）</p>
+<p>這些地址是他們的公開金鑰 (Public Key)。Alice 擁有 30 個貨幣（來自
+John 在交易 ID <code>0x5645464</code> 中發送給她的），Bob 擁有 0
+個貨幣。Alice 想發送 10 個貨幣給 Bob。</p>
+<p>Alice 會創建以下交易 (Transaction)：</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">// 第一個交易輸出給 Bob</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> txOut1 <span class="op">=</span> &#123;</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">amount</span><span class="op">:</span> <span class="dv">10</span><span class="op">,</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">address</span><span class="op">:</span> <span class="st">&#39;0xB&#39;</span> <span class="co">// Bob 的地址 (Address)</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>&#125;</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">// 第二個交易輸出給 Alice 自己</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> txOut2 <span class="op">=</span> &#123;</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">amount</span><span class="op">:</span> <span class="dv">20</span><span class="op">,</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="dt">address</span><span class="op">:</span> <span class="st">&#39;0xA&#39;</span> <span class="co">// Alice 的地址 (Address)</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>&#125;</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">// 交易輸入</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">// transactionOutputId 是 John 之前發送 30 個貨幣給 Alice 的交易 ID</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> txIn <span class="op">=</span> &#123;</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="dt">transactionOutputId</span><span class="op">:</span> <span class="st">&#39;0x5645464&#39;</span><span class="op">,</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="dt">transactionOutputIndex</span><span class="op">:</span> <span class="dv">0</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>&#125;</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co">// 創建交易</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> tx <span class="op">=</span> &#123;</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  <span class="dt">transactionOutputs</span><span class="op">:</span> [txOut1<span class="op">,</span> txOut2]<span class="op">,</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  <span class="dt">transactionInputs</span><span class="op">:</span> [txIn]<span class="op">,</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>&#125;</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="co">// 接著需要計算交易的雜湊值 (Hash)。詳細流程可以參考以下教程：[交易教程](https://lhartikk.github.io/).</span></span></code></pre></div>
+<p>幸運的是，你不需要親自完成這些步驟，你的錢包軟體 (Wallet Software)
+會自動處理！</p>
+<p>交易 (Transaction) 創建後，必須簽署 (Sign) 才能廣播 (Broadcast)
+到節點 (Node) 並成為區塊 (Block) 的一部分。</p>
+<h3 id="加密學-cryptography">加密學 (Cryptography)</h3>
+<p>這就是加密學 (Cryptography) 發揮作用的地方。</p>
+<p>比特幣 (Bitcoin) 和其他許多加密貨幣 (Cryptocurrency)
+使用<strong>橢圓曲線數位簽章演算法 (ECDSA, Elliptic Curve Digital
+Signature Algorithm)</strong> 來保護交易 (Transaction)
+安全，並生成公開金鑰 (Public Key) 和私密金鑰 (Private Key)。</p>
+<p>每個比特幣 (Bitcoin) 使用者需要兩把金鑰： - <strong>私密金鑰 (Private
+Key)</strong>（秘密金鑰） - <strong>公開金鑰 (Public
+Key)</strong>（用作地址 (Address)，也用於接收貨幣）</p>
+<p>私密金鑰 (Private Key) 是隨機生成的，公開金鑰 (Public Key) 則透過
+ECDSA 演算法生成。具體生成方式可參考：<a
+target="_blank" rel="noopener" href="https://bitcoin.stackexchange.com/questions/25024/how-do-you-get-a-bitcoin-public-key-from-a-private-key#29880">技術文章</a>（非常技術性）。</p>
+<p>ECDSA 演算法是單向的，你可以從私密金鑰 (Private Key) 生成公開金鑰
+(Public Key)，但無法從公開金鑰 (Public Key) 推導出私密金鑰 (Private
+Key)。</p>
+<p>這兩把金鑰用於簽署交易 (Sign
+Transaction)（即我們之前創建的交易）。簽章 (Signature)
+可以透過另一個函數驗證，該函數接受交易資料和用於簽署的公開金鑰 (Public
+Key)，並返回簽章是否有效。技術細節可參考：<a
+target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Elliptic_Curve_Digital_Signature_Algorithm#Signature_generation_algorithm">維基百科</a>.</p>
+<p>簽署 (Sign) 完成後，交易 (Transaction) 可以廣播 (Broadcast)
+到網絡。</p>
+<p>節點 (Node) 收到交易 (Transaction) 後，會先檢查其有效性：無雙重支付
+(Double Spending)、帳戶餘額 (Account Balance)
+有效、輸入金額等於輸出金額、簽章 (Signature)
+有效。然後將交易添加到交易池 (Transaction
+Pool)（與其他節點共享），並將其加入區塊 (Block)。</p>
+<h2 id="帳戶餘額-account-balance">帳戶餘額 (Account Balance)</h2>
+<p>為了計算每個帳戶的餘額，比特幣 (Bitcoin) 和其他加密貨幣
+(Cryptocurrency) 使用 <strong>UTxO（未花費交易輸出, Unspent Transaction
+Output）</strong>。</p>
+<p>簡單來說，比特幣 (Bitcoin) 在區塊鏈 (Blockchain) 之外儲存每個地址
+(Address) 接收但尚未花費的交易
+(Transaction)。通過計算某個帳戶的未花費交易總和，就可以知道該帳戶的餘額。此值用於確保某人不會花費超過其擁有的金額。</p>
+<p>UTxO 儲存在每個節點 (Node) 本地管理的資料庫中，以便快速處理和驗證交易
+(Transaction)，而無需檢查整個區塊鏈 (Blockchain)。</p>
+<h2
+id="工作量證明與挖礦與難題-proof-of-work-mining-and-puzzle">工作量證明與挖礦與難題
+(Proof of Work, Mining, and Puzzle)</h2>
+<p>由於加密貨幣 (Cryptocurrency) 採用去中心化的點對點網絡 (Decentralized
+Peer-to-Peer Network)，運行加密貨幣軟體的節點
+(Node)（電腦）必須決定哪些交易 (Transaction) 應包含在下一個區塊 (Block)
+中，並達成共識 (Consensus)。</p>
+<p>不同的共識機制 (Consensus Mechanism) 定義了這些規則。比特幣 (Bitcoin)
+使用的最早共識機制是<strong>工作量證明 (Proof of
+Work)</strong>，也是最常用的。</p>
+<p>在解釋工作量證明 (Proof of Work)
+之前，讓我們看看如果沒有工作量證明會發生什麼。</p>
+<p>假設有一種名為 SmallCoin 的小型加密貨幣 (Cryptocurrency)，擁有 3
+個節點 (Node)（X、Y、Z），每個區塊 (Block) 最多包含 3 筆交易
+(Transaction)，並每小時添加一個區塊到區塊鏈 (Blockchain)。Alice 廣播
+(Broadcast) 了 3 筆交易，Bob 廣播了另外 3 筆交易，且所有交易都有效。節點
+X 決定包含 Alice 的 3 筆交易，節點 Y 決定包含 Bob 的 3 筆交易，節點 Z
+則選擇 2 筆 Alice 的交易和 1 筆 Bob 的交易。</p>
+<p>誰是對的？🤔 所有節點 (Node) 如何就下一個區塊 (Block)
+達成一致？一種解決方案是每次隨機選擇一個節點，如同抽籤。但問題在於：如果某個節點（例如
+X）運行 97 個額外的節點（例如運行 97
+個軟體實例），它將擁有控制權，可以黑名單某些用戶，例如永遠不接受 Bob
+的交易！這被稱為 <strong>Sybil 攻擊 (Sybil Attack)</strong>。</p>
+<p>在現實中，比特幣 (Bitcoin) 區塊鏈 (Blockchain) 每 10 分鐘添加一個區塊
+(Block)，區塊大小限制為 1 MB（而非 3 筆交易的限制）。截至 2018 年 4 月
+13 日，運行中的比特幣節點 (Node) 約有 10,050 個（參考：<a
+target="_blank" rel="noopener" href="https://bitnodes.earn.com/">Bitnodes</a>）。比特幣 (Bitcoin)
+使用工作量證明 (Proof of Work) 共識來對抗 Sybil 攻擊 (Sybil
+Attack)。</p>
+<h3 id="工作量證明共識-proof-of-work-consensus">工作量證明共識 (Proof of
+Work Consensus)</h3>
+<p>與其隨機選擇節點 (Node) 的區塊 (Block)，節點必須解決一個計算難題
+(Computational Puzzle)。最早解決難題的節點將被選中，其區塊 (Block)
+將被添加到區塊鏈 (Blockchain)。</p>
+<p>難題的運作方式如下： 回想區塊 (Block) 結構，包含時間戳
+(Timestamp)、資料、<code>nonce</code> 和雜湊值 (Hash)。<strong>挖礦
+(Mining)</strong> 是指不斷增加 <code>nonce</code> 並計算雜湊值
+(Hash)，直到雜湊值以特定數量的 0 開頭（稱為難度 (Difficulty)）。</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> hash <span class="op">=</span> <span class="fu">H</span>(previousHash <span class="op">+</span> timestamp <span class="op">+</span> data<span class="op">.</span><span class="fu">toString</span>() <span class="op">+</span> nonce)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">// 比特幣使用的雜湊函數是 SHA-256，由 NSA 創建</span></span></code></pre></div>
+<p>我製作了一個 JSFiddle 讓你理解挖礦 (Mining) 的運作：<a
+target="_blank" rel="noopener" href="https://jsfiddle.net/sandoche/784kdgnp/">JSFiddle</a>.
+你可以更改傳遞給雜湊函數 (Hash Function) 的資料以及挖礦難度 (Mining
+Difficulty)。</p>
+<p>當節點 (Node) 找到符合難度的 <code>nonce</code> 時，它會將區塊
+(Block) 廣播 (Broadcast) 到網絡，該區塊將成為區塊鏈 (Blockchain)
+的下一個區塊。找到區塊的節點將獲得獎勵 (Reward)，以激勵人們通過運行礦機
+(Mining Rig) 來提高網絡安全性。</p>
+<p>由於區塊 (Block) 包含雜湊值 (Hash)、交易
+(Transaction)、<code>nonce</code> 和時間戳 (Timestamp)，其他節點 (Node)
+可以輕鬆驗證區塊的有效性及工作量證明 (Proof of Work)
+是否完成。無法通過作弊跳過 <code>nonce</code> 嘗試。</p>
+<p>如果兩個區塊 (Block) 同時被發送，會出現分叉
+(Fork)，但規則是將區塊添加到最長的分支 (Longest
+Chain)，因此較短的分支最終會被放棄。</p>
+<p>基本上，與其進行隨機抽籤，節點 (Node) 的計算能力越強，驗證下一個區塊
+(Block) 的機會就越大。這使得控制區塊鏈 (Blockchain)
+變得困難，因為你需要全球 51% 的計算能力才能阻止某些交易 (Transaction)
+或將其列入黑名單。這就是工作量證明 (Proof of Work) 的目的：使雙重支付
+(Double Spending)
+或改寫歷史變得困難。因為要擁有計算能力，你需要投資於挖礦硬件 (Mining
+Hardware)。</p>
+<p>比特幣 (Bitcoin) 最初設計為使用 CPU 進行挖礦
+(Mining)，因此全球許多電腦都在挖礦。但隨著比特幣價值上升#&gt;
+隨著比特幣價值上升，人們開始投入更多資源。他們從使用 GPU 挖礦，進而使用
+FPGA（現場可編程門陣列 (Field-Programmable Gate Array)，特別適合 SHA-256
+計算），現在比特幣礦工使用 ASIC（專用積體電路 (Application-Specific
+Integrated Circuit)），這些設備專為比特幣挖礦（以及其他一些貨幣）設計
+😱，但其唯一用途就是挖礦。挖礦在硬件（購買）方面成本高昂，運行和冷卻也消耗大量電力。我們稍後將討論能源浪費的問題。但這就是工作量證明
+(Proof of Work) 的交易：將能源和工作轉化為貨幣和安全性。</p>
+<p>由於即使使用最新的 ASIC 也可能需要數年才能找到第一個區塊
+(Block)，礦工通常會加入礦池 (Mining Pool) 合作。礦池讓礦工一起尋找
+<code>nonce</code>，並根據找到的股份 (Share) 數量分配獎勵 (Reward)。股份
+(Share) 是指以比難度 (Difficulty) 略低的 0 開頭的雜湊值 (Hash)。</p>
+<p>以下是一個難度 (Difficulty) 為 6 的範例：</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">// 無效雜湊 (Invalid Hash)</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="dv">18</span><span class="er">ea285983df355f3024e412fb46ad6cbd98a7ffe6872e26612e35f38aa39c41</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">// 無效雜湊 (Invalid Hash)</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="dv">0146415487</span><span class="er">f165835c00d441602290f7aa494f91b93fd9ec2c5d280f17f999c0</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">// 無效雜湊 (Invalid Hash)，但因以 5 個 0 開頭而視為股份 (Share)</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="dv">00000</span><span class="er">eeff9839efeb3e528ade5789d90b8721c34c49718eeb9626f5a29b1350b</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">// 有效雜湊 (Valid Hash)</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="dv">000000</span><span class="er">b8e1ae46744ccd94bdae212ed43f4a586df68a6348e39fa7fd13e9db5c</span></span></code></pre></div>
+<p>一個重要的細節是，無論有多少設備在挖礦 (Mining)，比特幣 (Bitcoin)
+的兩個區塊 (Block) 之間的時間將保持在約 10 分鐘，這通過每兩週調整難度
+(Difficulty) 來實現。你可以在這裡查看調整難度的程式碼範例：<a
+target="_blank" rel="noopener" href="https://lhartikk.github.io/jekyll/update/2017/07/13/chapter2.html">難度調整教程</a>.</p>
+<p>你可以在下圖中看到比特幣 (Bitcoin) 的雜湊率 (Hash Rate) 和難度
+(Difficulty)：</p>
+<p><img src="https://miro.medium.com/v2/resize:fit:1400/format:webp/0*s0NNN4yb2_uPV8oH." alt="pic"></p>
+<p><em>來源：<a
+target="_blank" rel="noopener" href="https://bitcoinwisdom.com/bitcoin/difficulty">Bitcoin
+Wisdom</a></em></p>
+<p>最後一點，即使不挖礦 (Mining) 也可以運行比特幣節點 (Bitcoin
+Node)，這樣做的唯一目的是在進行交易 (Transaction) 時不依賴任何可能記錄你
+IP 地址的中介。但不挖礦的節點不會獲得獎勵 (Reward) 😔。</p>
+<h2 id="獎勵與交易費用-rewards-and-transaction-fees">獎勵與交易費用
+(Rewards and Transaction Fees)</h2>
+<p>如前所述，獎勵 (Reward) 是激勵用戶成為礦工 (Miner)
+的手段，以確保網絡安全。如果沒有礦工
+(Miner)，網絡無法安全運行；如果沒有獎勵 (Reward)
+💵，沒有人會願意浪費能源（也就是金錢）。</p>
+<p>每種貨幣有自己的獎勵 (Reward)
+規則，你可以在源代碼中找到。例如，狗狗幣 (Dogecoin)（迷因幣 (Meme
+Coin)）在其最初幾個月提供隨機獎勵 (Random Reward)。</p>
+<p>在比特幣 (Bitcoin) 中，每個驗證區塊 (Block) 的節點 (Node) 目前可獲得
+12.5 BTC，此金額每 4 年減半 (Halving)。這是比特幣創建者預定義通脹率
+(Inflation Rate) 的方式！無人能更改。你可以在這裡查看下一次減半
+(Halving) 的日期：<a target="_blank" rel="noopener" href="http://www.bitcoinblockhalf.com/">Bitcoin
+Block Half</a>.</p>
+<p>為了獲得此獎勵 (Reward)，礦工 (Miner) 在進行挖礦難題 (Mining Puzzle)
+前會在區塊 (Block) 中添加一筆名為 <strong>Coinbase 交易 (Coinbase
+Transaction)</strong>
+的交易。此交易不包含任何輸入，僅包含一個輸出，輸出金額為獎勵金額，接收者為礦工的地址
+(Address)。一旦區塊 (Block) 被添加到區塊鏈 (Blockchain)，礦工 (Miner)
+即可保留此獎勵 (Reward)。</p>
+<p>此外，當你進行交易 (Transaction) 時，必須設定交易費用 (Transaction
+Fee)。此費用由礦工 (Miner) 收取。如果交易量過多，礦工 (Miner)
+會優先處理費用較高的交易。因此，你需要支付更高的費用才能讓交易更快被處理。</p>
+<p>某些加密貨幣 (Cryptocurrency) 不提供獎勵 (Reward)，僅向節點 (Node)
+提供交易費用 (Transaction
+Fee)；有些甚至不提供交易費用。在這些情況下，所有貨幣在創世區塊 (Genesis
+Block) 中創建，然後分發或出售給用戶。</p>
+<h2 id="確認與分支-confirmation-and-fork">確認與分支 (Confirmation and
+Fork)</h2>
+<p>最後一個需要理解的重要概念是交易的<strong>確認數 (Confirmation
+Number)</strong>。確認數 (Confirmation Number) 是指區塊鏈 (Blockchain)
+中包含交易 (Transaction) 的區塊 (Block) 之後的區塊數量。</p>
+<p>如前所述，區塊鏈 (Blockchain) 有時會出現分支 (Fork)，礦工 (Miner)
+傾向於將區塊 (Block) 添加到最長的分支 (Longest
+Chain)（實際上是用最多挖礦能力 (Mining Power) 構建的分支）。如果你的交易
+(Transaction) 被添加到區塊鏈
+(Blockchain)，但另一個分支變得更重要，較小的分支將成為孤分支 (Orphaned
+Branch)，你的交易將不再是分類帳 (Ledger) 的一部分。</p>
+<p>在比特幣 (Bitcoin) 中，如果一筆交易 (Transaction) 獲得超過 6 個確認
+(Confirmation)，則被認為是安全的，不太可能成為孤分支 (Orphaned
+Branch)。因此，如果你使用比特幣 (Bitcoin)
+賣商品或服務，務必在交付前確保獲得 6 個確認 (Confirmation)。</p>
+<h2
+id="整體流程簡介3-分鐘-overview-of-the-process-3-minutes">整體流程簡介（3
+分鐘） (Overview of the Process (3 Minutes))</h2>
+<p>現在你已經了解了最重要的概念，我建議你觀看以下影片，它將提供整個流程的良好概述和總結：</p>
+<p><a target="_blank" rel="noopener" href="https://youtu.be/M_zCjjy59cg?si=h1tOhDvcvNlMlAk0"><img
+src="https://img.youtube.com/vi/M_zCjjy59cg/0.jpg"
+alt="影片縮圖" /></a></p>
+<p>如果你想查看區塊 (Block) 的具體內容，這裡是一個比特幣 (Bitcoin)
+區塊的內容：<a
+target="_blank" rel="noopener" href="https://blockchain.info/fr/block/0000000000000000004f6b895db5e2dd336ccdecb42f3c829109096938882c8e">Blockchain.info</a>.</p>
+<h2
+id="分散式共識與挖礦替代方案-distributed-consensus-and-mining-alternatives">分散式共識與挖礦替代方案
+(Distributed Consensus and Mining Alternatives)</h2>
+<p>到目前為止，我們主要聚焦於比特幣 (Bitcoin)、區塊鏈 (Blockchain)
+資料結構和工作中量證明 (Proof of Work) 共識；但自比特幣 (Bitcoin)
+誕生以來，許多替代方案已經出現 😃。共識 (Consensus) 的目標是讓節點
+(Node) 就哪些交易 (Transaction)
+有效達成一致，並避免攻擊，例如雙重支付攻擊 (Double Spending
+Attack)、DDoS 攻擊 (DDoS Attack) 或黑名單攻擊 (Blacklist
+Attack)。我在以下文章中詳細介紹了這些：</p>
+<p><strong><a
+target="_blank" rel="noopener" href="https://medium.com/learning-lab/proof-of-what-understand-the-distributed-consensuses-in-blockchain-1d9304ae4afe">什麼是共識機制？
+(What is a Consensus Mechanism?)</a></strong></p>
+<h2
+id="加密貨幣面臨的挑戰-challenges-facing-cryptocurrencies">加密貨幣面臨的挑戰
+(Challenges Facing Cryptocurrencies)</h2>
+<p>以下是加密貨幣 (Cryptocurrency) 面臨的主要挑戰：</p>
+<h3 id="可擴展性-scalability">可擴展性 (Scalability)</h3>
+<p>首要且最重要的挑戰是可擴展性
+(Scalability)。隨著用戶數量增加，加密貨幣 (Cryptocurrency)
+必須保持穩定。請注意，每個節點 (Node) 需要儲存區塊鏈 (Blockchain)
+的完整副本，比特幣 (Bitcoin) 區塊鏈目前約 160 GB！</p>
+<h3 id="速度-speed">速度 (Speed)</h3>
+<p>加密貨幣 (Cryptocurrency) 應能與 Visa 競爭，Visa 在高峰期可處理每秒
+54,000 筆交易 (Transaction)，平均每秒 2,000 筆交易。<br />
+比特幣 (Bitcoin) 每秒可處理 3 筆交易，以太坊 (Ethereum) 20
+筆，Nano（Raiblocks）約 7,000 筆。</p>
+<h3 id="成本-cost">成本 (Cost)</h3>
+<p>交易費用 (Transaction Fee)
+應盡可能低，這是與其他集中式轉帳或支付解決方案競爭的唯一方式。例如，Paypal
+收取 2.9% 的費用 + 0.30 美元。<br />
+比特幣 (Bitcoin) 的交易費用 (Transaction Fee) 在高交易量時可能高達 50
+美元，但費用波動很大，查看此圖表：<a
+target="_blank" rel="noopener" href="https://bitinfocharts.com/comparison/bitcoin-transactionfees.html">Bitinfocharts</a>.<br />
+某些加密貨幣 (Cryptocurrency) 如 Nano（Raiblocks）或 Iota 則無交易費用
+(Transaction Fee)！</p>
+<h3 id="中心化-centralization">中心化 (Centralization)</h3>
+<p>中心化 (Centralization)
+可能成為問題，導致網絡不安全或不可靠。某些共識機制 (Consensus Mechanism)
+可能促使節點 (Node) 更中心化。例如，在工作量證明 (Proof of Work)
+中，礦工 (Miner) 傾向於合作組成礦池 (Mining Pool)，然後彼此分享獎勵
+(Reward)。</p>
+<h3 id="能源浪費-energy-waste">能源浪費 (Energy Waste)</h3>
+<p>工作量證明 (Proof of Work) 共識消耗大量電力。比特幣 (Bitcoin) 挖礦
+(Mining) 目前的年耗電量為 60 太瓦時，相當於 10 座核電廠的年產量。</p>
+<p><img src="https://miro.medium.com/v2/resize:fit:1400/format:webp/0*hHZ2M9G_PoomWJjZ." alt="pic"></p>
+<p>你可能認為運行加密貨幣 (Cryptocurrency)
+耗電量很大。但不能單獨評判，應與全球銀行系統的耗電量比較，包括：員工工作、辦公室用電、IT
+系統全天運行、ATM、運鈔車等。<br />
+更多數據請見：<a
+target="_blank" rel="noopener" href="https://digiconomist.net/bitcoin-energy-consumption">Digiconomist</a>.</p>
+<p>此外，如前所述，有些共識機制 (Consensus Mechanism) 比工作量證明
+(Proof of Work) 更高效，甚至可以使用太陽能 🌞！</p>
+<h2 id="下一步-next-steps">下一步 (Next Steps)</h2>
+<p>這篇文章是我關於區塊鏈 (Blockchain) 與加密貨幣 (Cryptocurrency)
+學習挑戰的一部分。我還撰寫了以下相關文章： - <a
+target="_blank" rel="noopener" href="https://medium.com/learning-lab/why-cryptocurrencies-matter-37dd736bc8d0">為什麼加密貨幣很重要？
+(Why Cryptocurrencies Matter)</a> - <a
+target="_blank" rel="noopener" href="https://medium.com/learning-lab/proof-of-what-understand-the-distributed-consensuses-in-blockchain-1d9304ae4afe">什麼是共識機制？
+(What is a Consensus Mechanism?)</a> - <a
+target="_blank" rel="noopener" href="https://medium.com/learning-lab/how-to-make-money-with-cryptocurrencies-9a6d4a08e976">如何通過加密貨幣賺錢？
+(How to Make Money with Cryptocurrencies)</a> - <a
+target="_blank" rel="noopener" href="https://medium.com/learning-lab/how-i-integrated-blockchain-to-my-existing-product-kanbanote-c97c74dafb6c">如何將區塊鏈整合到現有產品（Kanbanote）？
+(How to Integrate Blockchain into an Existing Product (Kanbanote))</a> -
+<a
+target="_blank" rel="noopener" href="https://medium.com/learning-lab/how-to-build-your-own-cryptocurrency-proof-of-stake-in-just-a-few-minutes-6d526bca4a91">如何在幾分鐘內創建自己的權益證明加密貨幣？
+(How to Build Your Own Proof of Stake Cryptocurrency in Just a Few
+Minutes)</a></p>
+<p>如果您喜歡這篇文章，請點擊下面的拍手按鈕 👏
+幾次以示支持！也歡迎留言提供反饋。</p>
+<p>想看更多類似文章？請在 <a
+target="_blank" rel="noopener" href="https://www.patreon.com/sandoche">Patreon</a> 上支持我 🙌</p>
+<p><strong>關於作者</strong><br />
+<strong>Sandoche ADITTANE</strong><br />
+我每個月學習一個主題並撰寫相關文章！<br />
+<a target="_blank" rel="noopener" href="https://medium.com/@sandoche">追蹤作者</a></p>
+<p><strong>發布於</strong><br />
+<a target="_blank" rel="noopener" href="https://medium.com/learning-lab">Learning Lab</a><br />
+每月學習一個主題的刊物<br />
+<a target="_blank" rel="noopener" href="https://medium.com/learning-lab">追蹤刊物</a></p>
+
+    </div>
+    
+    
+    
+    
+    
+    
+    
+</div>
+
+            <footer id="footer">
+    <div id="footer-wrap">
+        <div>
+            &copy;
+            2024 - 2025 t2o0n321.blog
+            <span id="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;t2o0n321
+        </div>
+        <div>
+            Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp;
+            <a target="_blank" rel="noopener" href="https://github.com/theme-particlex/hexo-theme-particlex">ParticleX Theme</a>
+        </div>
+        
+    </div>
+</footer>
+
+        </div>
+        
+        <transition name="fade">
+            <div id="preview" ref="preview" v-show="previewShow">
+                <img id="preview-content" ref="previewContent" />
+            </div>
+        </transition>
+        
+    </div>
+    <script src="/js/main.js"></script>
+    
+    
+
+
+
+
+    
+</body>
+</html>
