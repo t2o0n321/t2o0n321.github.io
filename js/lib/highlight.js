@@ -14,10 +14,7 @@ mixins.highlight = {
             let codes = document.querySelectorAll("pre");
             for (let i of codes) {
                 let code = i.textContent;
-                let language = i.classList[i.classList.length - 1];
-                if (language === 'sourceCode') {
-                    language = 'plaintext';
-                }
+                let language = i.classList[i.classList.length - 1] === 'sourceCode' ? 'sourceCode' : i.classList[i.classList.length - 1];
                 let highlighted;
                 try {
                     highlighted = hljs.highlight(code, { language }).value;
