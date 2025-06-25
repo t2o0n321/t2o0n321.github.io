@@ -1,0 +1,662 @@
+
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="utf-8" />
+    <title>Bitcoin White Paper | t2o0n321.blog</title>
+    <meta name="author" content="t2o0n321" />
+    <meta name="description" content="t2o0n321 的部落格，記錄生活點滴、學習筆記、程式開發等。" />
+    <meta name="keywords" content="" />
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
+    <link rel="icon" href="/images/avatar.gif" />
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.5.13/vue.global.prod.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Lexend:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;600;700;800;900&display=swap"
+/>
+<script> const mixins = {}; </script>
+
+<script src="https://polyfill.alicdn.com/v3/polyfill.min.js?features=default"></script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.6.0/highlightjs-line-numbers.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/default.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/bash.min.js"></script>
+<link
+    rel="stylesheet"
+    href="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/styles/github.min.css"
+/>
+<script src="/js/lib/highlight.js"></script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" />
+<script src="/js/lib/math.js"></script>
+
+
+<script src="/js/lib/preview.js"></script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css" />
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body>
+    <div id="layout">
+        <transition name="fade">
+            <div id="loading" v-show="loading">
+                <div id="loading-circle">
+                    <h2>LOADING</h2>
+                    <p>載入過慢請開啟暫存 瀏覽器默認開啟</p>
+                    <img src="/images/loading.gif" />
+                </div>
+            </div>
+        </transition>
+        <div id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
+    <nav id="desktop-menu">
+        <a class="title" href="/">
+            <span>T2O0N321.BLOG</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;Home</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;About</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;Archives</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;Categories</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;Tags</span>
+        </a>
+        
+    </nav>
+    <nav id="mobile-menu">
+        <div class="title" @click="showMenuItems = !showMenuItems">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;T2O0N321.BLOG</span>
+        </div>
+        <transition name="slide">
+            <div class="items" v-show="showMenuItems">
+                
+                <a href="/">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-house fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Home</div>
+                    </div>
+                </a>
+                
+                <a href="/about">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-id-card fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">About</div>
+                    </div>
+                </a>
+                
+                <a href="/archives">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-box-archive fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Archives</div>
+                    </div>
+                </a>
+                
+                <a href="/categories">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-bookmark fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Categories</div>
+                    </div>
+                </a>
+                
+                <a href="/tags">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-tags fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
+                    </div>
+                </a>
+                
+            </div>
+        </transition>
+    </nav>
+</div>
+<transition name="fade">
+    <div id="menu-curtain" @click="showMenuItems = !showMenuItems" v-show="showMenuItems"></div>
+</transition>
+
+        <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
+            <div class="article">
+    <div>
+        <h1>Bitcoin White Paper</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2025/6/25
+        </span>
+        
+        
+            <span class="tags">
+                <span class="icon">
+                    <i class="fa-solid fa-tags fa-fw"></i>
+                </span>
+                
+                
+                <span class="tag">
+                    
+                    <a href="/tags/crypto-currencies/" style="color: #00bcd4">
+                        crypto-currencies
+                    </a>
+                </span>
+                
+            </span>
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <h1 id="bitcoin-white-paper">Bitcoin White Paper</h1>
+<blockquote>
+<p><a
+target="_blank" rel="noopener" href="https://github.com/cypherpunks-core/bitcoin_whitepaper_zh">https://github.com/cypherpunks-core/bitcoin_whitepaper_zh</a>
+<br/> <a
+target="_blank" rel="noopener" href="https://peterpowerfullife.com/blog/satoshi-nakamoto-electronic-cash-white-paper/">https://peterpowerfullife.com/blog/satoshi-nakamoto-electronic-cash-white-paper/</a></p>
+</blockquote>
+<p>這邊會從我的學習筆記簡單介紹比特幣的白皮書，如果需要更細節的內容，可以看我在
+notion 發布的筆記文章喔：</p>
+<blockquote>
+<p><a
+target="_blank" rel="noopener" href="https://t2o0n321-note.notion.site/Bitcoin-White-Paper-2035a22fbd8d80f3aa78d55e6909224d?pvs=73">https://t2o0n321-note.notion.site/Bitcoin-White-Paper-2035a22fbd8d80f3aa78d55e6909224d?pvs=73</a></p>
+</blockquote>
+<h1 id="目錄">目錄</h1>
+<ol type="1">
+<li><a href="#一簡介">簡介</a></li>
+<li><a href="#二交易transaction-tx">交易（Transaction, TX）</a></li>
+<li><a href="#三時間戳伺服器timestamp-server">時間戳伺服器（Timestamp
+Server）</a></li>
+<li><a href="#四工作量證明proof-of-work-pow">工作量證明（Proof of Work,
+PoW）</a></li>
+<li><a href="#五網路-network">網路 (Network)</a></li>
+<li><a href="#六獎勵-incentive">獎勵 (Incentive)</a></li>
+<li><a
+href="#七回收硬碟空間reclaiming-disk-space">回收硬碟空間（Reclaiming
+Disk Space）</a></li>
+<li><a
+href="#八簡化版支付確認-simplified-payment-verification-spv">簡化版支付確認
+(Simplified Payment Verification, SPV)</a></li>
+<li><a
+href="#九價值的組合與分割-combining-and-splitting-value">價值的組合與分割
+(Combining and Splitting Value)</a></li>
+<li><a href="#十隱私-privacy">隱私 (Privacy)</a></li>
+<li><a href="#十一計算-calculations">計算 (Calculations)</a></li>
+</ol>
+<hr />
+<h1 id="一簡介">一、簡介</h1>
+<p>你有沒有發現，現在網路上的金錢交易，幾乎都要靠銀行或第三方支付公司來幫忙？這些金融機構就像是大家都要信任的「中間人」，幫我們處理每一筆轉帳或付款。</p>
+<p>但這樣的做法，其實有不少小麻煩：</p>
+<ol type="1">
+<li><strong>一定要信任中間人</strong>：
+<ul>
+<li>不管你是買東西還是收錢，都得相信銀行或支付公司會幫你把錢處理好。</li>
+</ul></li>
+<li><strong>交易可能被取消</strong>：
+<ul>
+<li>有時候，明明已經付錢了，卻還是有可能被退回或撤銷，像是信用卡爭議、詐騙等。</li>
+<li>這讓賣家很不安心，怕收到錢後又被追回。</li>
+</ul></li>
+<li><strong>手續費和麻煩多</strong>：
+<ul>
+<li>因為要防止糾紛，銀行常常會要求你提供很多資料，流程也變得複雜，還要收手續費。</li>
+</ul></li>
+<li><strong>線上交易不夠「像現金」</strong>：
+<ul>
+<li>在現實生活中，現金交易是「一手交錢一手交貨」，沒有人能反悔。但網路上，這種「不可逆」的感覺很難做到。</li>
+</ul></li>
+</ol>
+<p>所以，大家一直在想，有沒有可能發明一種「不用信任中間人」的網路金錢？</p>
+<p>理想的電子支付系統，應該要：</p>
+<ul>
+<li>讓雙方直接交易，不用靠銀行背書。</li>
+<li>交易一旦完成就不能反悔，保護賣家。</li>
+<li>能防止「一筆錢花兩次」這種作弊（雙重支付）。</li>
+<li>整個系統要夠安全，只要大多數人是誠實的，壞人就很難搞破壞。</li>
+</ul>
+<hr />
+<h1 id="二交易transaction-tx">二、交易（Transaction, TX）</h1>
+<h2 id="虛擬貨幣的基本玩法">虛擬貨幣的基本玩法</h2>
+<ol type="1">
+<li><strong>什麼是電子貨幣？</strong>
+<ul>
+<li>你可以把電子貨幣想像成一條「簽名接力棒」。每次有人把錢轉給別人，就在這條接力棒上加一個自己的簽名。</li>
+<li>這樣，每一筆錢的來龍去脈都查得到，誰給誰、什麼時候，都有記錄。</li>
+</ul></li>
+<li><strong>怎麼轉帳？</strong>
+<ul>
+<li>假設你要把手上的比特幣轉給朋友，你會：
+<ul>
+<li>把上一次收到這筆錢的紀錄（hash）和朋友的「收款帳號」（公鑰）寫在一起。</li>
+<li>用自己的「私鑰」簽名，證明這筆錢真的屬於你。</li>
+</ul></li>
+<li>這樣一來，朋友收到後，也能查到這筆錢的歷史，確定沒問題。</li>
+</ul></li>
+</ol>
+<img src="/2025/06/25/bitcoin-whitepaper/image.png" class="">
+<ol start="3" type="1">
+<li><strong>怎麼驗證？</strong>
+<ul>
+<li>收到錢的人，只要檢查這條「簽名接力棒」上的每一個簽名，就能確定這筆錢沒被亂改，也真的屬於轉帳的人。</li>
+</ul></li>
+</ol>
+<h2 id="雙重支付的問題">雙重支付的問題</h2>
+<ol type="1">
+<li><strong>什麼是雙重支付？</strong>
+<ul>
+<li>因為電子資料很容易複製，有些人可能會想「一筆錢花兩次」。</li>
+<li>這就像你把同一張百元鈔票影印兩份，分別給兩個人，這在現實世界當然不行，但在網路上卻很難防。</li>
+</ul></li>
+<li><strong>傳統解法：找個公正的「鑄幣廠」</strong>
+<ul>
+<li>以前的做法，是找一個大家都信任的「鑄幣廠」（有點像銀行），每一筆交易都要經過它來檢查。</li>
+<li>只要鑄幣廠說OK，這筆錢才算真的轉手。</li>
+<li>但這樣一來，整個系統就又回到「要信任中間人」的老問題。</li>
+</ul></li>
+</ol>
+<h2 id="去中心化的想法">去中心化的想法</h2>
+<ol type="1">
+<li><strong>大家一起監督</strong>
+<ul>
+<li>如果我們不想靠單一的鑄幣廠，那就要讓所有人都能看到每一筆交易的歷史。</li>
+<li>這樣，大家可以一起確認，這筆錢是不是第一次被花出去。</li>
+</ul></li>
+<li><strong>共識很重要</strong>
+<ul>
+<li>要做到這一點，系統必須有辦法讓大家對「哪一筆交易是最早的」達成共識，這樣才能防止有人作弊。</li>
+</ul></li>
+</ol>
+<hr />
+<h1 id="三時間戳伺服器timestamp-server">三、時間戳伺服器（Timestamp
+Server）</h1>
+<p>你可以把「時間戳伺服器」想像成一個公開的日記本，大家都能在上面寫下「我在某個時間點做了什麼事」。</p>
+<ol type="1">
+<li><strong>時間戳伺服器是什麼？</strong>
+<ul>
+<li>它會把一堆交易（像一頁日記）做成一個「雜湊」（hash），然後標記上時間，公開給大家看。</li>
+<li>這就像你把一張照片貼到網路論壇，證明「這張照片在某個時間點就已經存在了」。</li>
+</ul></li>
+<li><strong>為什麼要這樣做？</strong>
+<ul>
+<li>這樣可以證明，這些交易在那個時間點之前就已經發生，沒有人能事後偷偷改掉。</li>
+</ul></li>
+<li><strong>怎麼串成一條鏈？</strong>
+<ul>
+<li>每一個新的時間戳，裡面都會包含前一個時間戳的雜湊，這樣就像一條「日記鏈」一樣，一環扣一環。</li>
+<li>如果有人想改過去的紀錄，就必須把後面所有的日記都重寫，這幾乎是不可能的。</li>
+</ul></li>
+</ol>
+<hr />
+<h1 id="四工作量證明proof-of-work-pow">四、工作量證明（Proof of Work,
+PoW）</h1>
+<ol type="1">
+<li><strong>什麼是工作量證明？</strong>
+<ul>
+<li>你可以把它想像成一個「解謎比賽」。</li>
+<li>每個人都在搶著解出一個很難的謎題（就是找到一個特定的數字，讓整個區塊的雜湊值有很多個0開頭）。</li>
+<li>誰先解出來，誰就有權利把這一頁日記（區塊）寫進區塊鏈。</li>
+</ul></li>
+<li><strong>為什麼要這麼麻煩？</strong>
+<ul>
+<li>這樣做的好處是，大家都要花力氣（算力）來參與，沒有人能輕易作弊。</li>
+<li>只要大多數人是誠實的，壞人就算想作弊，也要付出比別人更多的努力，幾乎不可能成功。</li>
+</ul></li>
+<li><strong>怎麼驗證？</strong>
+<ul>
+<li>驗證很簡單，只要檢查這個答案（雜湊值）是不是有夠多的0開頭就好。</li>
+<li>所以「解題」很難，「驗證」卻很快。</li>
+</ul></li>
+<li><strong>比喻一下</strong>：
+<ul>
+<li>想像你和朋友玩猜數字遊戲，規則是「誰先猜到一個讓答案開頭有5個0的數字就贏」。</li>
+<li>你可能要猜很多次才會中，但只要中一次，大家一看就知道你對了。</li>
+</ul></li>
+<li><strong>保護區塊鏈的秘密武器</strong>：
+<ul>
+<li>工作量證明讓每一個區塊都很難被改動。</li>
+<li>如果有人想改過去的區塊，不只要重做那個區塊的謎題，還要把後面所有的謎題都重新解過，這幾乎是不可能的。</li>
+</ul></li>
+<li><strong>難度會調整</strong>：
+<ul>
+<li>如果大家解謎太快，系統就會自動把謎題變難，讓平均每10分鐘才會有一個人解出來。</li>
+<li>這樣可以確保區塊鏈的成長速度穩定，不會一下子暴衝。</li>
+</ul></li>
+</ol>
+<hr />
+<h1 id="五網路-network">五、網路 (Network)</h1>
+<p>你可以把比特幣的網路想像成一個大家都能參加的「大群組」，每個人都可以看到最新的交易消息，也都能參與維護這個系統。</p>
+<p>比特幣網路的運作流程，其實就像一場大家一起參加的「記帳遊戲」：</p>
+<ol type="1">
+<li><strong>新交易廣播給所有人</strong>
+<ul>
+<li>每當有人發送比特幣（像是A轉1顆比特幣給B），這筆交易就會被「大聲宣布」給所有節點知道。</li>
+<li>每個節點都會把這筆交易暫時放進自己的「記憶池」（mempool），等著打包。</li>
+</ul></li>
+<li><strong>大家收集交易、組成區塊</strong>
+<ul>
+<li>節點（尤其是礦工）會從記憶池裡挑選還沒被打包的交易，組成一個「候選區塊」。</li>
+<li>這就像大家把還沒送出去的包裹裝進一個大箱子，準備進行下一步——挖礦。</li>
+</ul></li>
+<li><strong>開始解謎（挖礦）</strong>
+<ul>
+<li>每個礦工都會為這個候選區塊進行「工作量證明」（Proof of
+Work），也就是拼命猜數字，直到找到一個讓區塊雜湊值夠難的答案。</li>
+</ul></li>
+<li><strong>有人解出謎題就廣播新區塊</strong>
+<ul>
+<li>一旦有礦工成功解出謎題，就會馬上把這個新區塊「大聲宣布」給全網。</li>
+<li>區塊裡包含一堆交易、前一個區塊的雜湊、時間戳記、nonce等。</li>
+</ul></li>
+<li><strong>大家檢查新區塊是否合格</strong>
+<ul>
+<li>其他節點收到新區塊後，會檢查裡面的每一筆交易是不是有效，有沒有雙重支付，區塊本身的結構和工作量證明對不對。</li>
+<li>只有全部通過檢查，這個區塊才會被大家接受。</li>
+</ul></li>
+<li><strong>大家以這個區塊為基礎繼續挖礦</strong>
+<ul>
+<li>如果節點認可這個區塊，就會以它為基礎繼續挖下一個區塊。</li>
+<li>這個行為也像是在「投票」：代表「我認同這個區塊，因為我以它為基礎繼續努力」。</li>
+</ul></li>
+</ol>
+<aside>
+<h3 id="總結流程串起來就是">總結流程串起來就是：</h3>
+<ol type="1">
+<li>新交易發送出來，全網知道。</li>
+<li>礦工收集交易、組區塊。</li>
+<li>礦工開始 PoW 挖礦。</li>
+<li>有人挖到就廣播。</li>
+<li>其他節點驗證後接受。</li>
+<li>所有人就從這個區塊繼續往下挖。</li>
+</ol>
+</aside>
+<hr />
+<h1 id="六獎勵-incentive">六、獎勵 (Incentive)</h1>
+<p>你可能會好奇：「這麼多人願意花電力、時間來幫忙維護比特幣網路，他們到底圖什麼？」</p>
+<p>其實，比特幣設計了一套很聰明的獎勵機制，讓大家有動力參與：</p>
+<ol type="1">
+<li><strong>挖礦獎勵：新比特幣的誕生</strong>
+<ul>
+<li>每個區塊的第一筆交易叫做「創幣交易」（coinbase
+transaction），這筆交易會「從無到有」產生新的比特幣，直接給挖到這個區塊的礦工。</li>
+<li>這就像黃金系統：誰挖到就是誰的，但你得付出努力（電力、時間）才挖得到。</li>
+</ul></li>
+<li><strong>交易手續費也是獎勵</strong>
+<ul>
+<li>除了新幣，每筆交易如果有多餘的錢沒轉出去（輸入大於輸出），這些差額就會變成手續費，歸打包區塊的礦工所有。</li>
+<li>這讓礦工即使未來新幣越來越少，還是有收入來源。</li>
+</ul></li>
+<li><strong>新幣會越來越少，最終只靠手續費</strong>
+<ul>
+<li>比特幣總量有限（2100萬顆），每隔約四年，挖礦獎勵就會「減半」。</li>
+<li>最後新幣發完，礦工就只能靠手續費維生。</li>
+</ul></li>
+<li><strong>誠實比作弊更有利</strong>
+<ul>
+<li>比特幣的獎勵設計，讓誠實參與比作弊更划算。</li>
+<li>如果你有很多算力，與其花力氣作弊，不如老老實實挖礦，這樣每10分鐘就能穩定拿到獎勵和手續費，長期下來更賺。</li>
+</ul></li>
+</ol>
+<aside>
+<blockquote>
+<p>💡 獎勵機制 = 幣的分發 + 鼓勵誠實 + 阻止攻擊</p>
+</blockquote>
+比特幣不是靠法律強制大家守規矩，而是用經濟誘因讓誠實行為自然而然發生，這就是它去中心化的根本。
+</aside>
+<hr />
+<h1
+id="七回收硬碟空間reclaiming-disk-space">七、回收硬碟空間（Reclaiming
+Disk Space）</h1>
+<p>你可能會想：「比特幣區塊鏈這麼大，會不會有一天硬碟裝不下？」</p>
+<p>其實，比特幣有一個很聰明的設計，讓你不用一直存下所有的細節資料：</p>
+<ol type="1">
+<li><strong>哪些資料可以刪？</strong>
+<ul>
+<li>如果一枚比特幣的最新交易已經被很多區塊覆蓋（也就是說，這筆錢已經被花出去很久了），那麼它之前的交易歷史就可以放心刪掉。</li>
+<li>這就像你把舊收據丟掉，只保留最新的帳本紀錄。</li>
+</ul></li>
+<li><strong>怎麼刪又不會壞掉？</strong>
+<ul>
+<li>這裡用到一個叫「Merkle Tree（梅克爾樹）」的技術。</li>
+<li>所有交易會被組成一棵樹，最上面的「樹根」（Merkle
+Root）會放進區塊頭裡。</li>
+<li>只要樹根沒變，就算你把底下的某些枝葉（舊交易細節）砍掉，整個區塊的驗證還是成立。</li>
+</ul></li>
+<li><strong>只存區塊頭就夠了嗎？</strong>
+<ul>
+<li>其實只要存下每個區塊的「區塊頭」（Header），就能追蹤整條鏈的歷史。</li>
+<li>一個區塊頭大約80
+bytes，一年下來也才幾MB，對現代電腦來說根本不痛不癢。</li>
+<li>這種「輕節點」（SPV節點）就算硬碟小，也能參與比特幣網路。</li>
+</ul></li>
+<li><strong>摩爾定律的幫忙</strong>
+<ul>
+<li>電腦硬體越來越進步，區塊鏈資料的成長速度其實遠比硬碟容量慢，所以不用太擔心。</li>
+</ul></li>
+</ol>
+<hr />
+<h1
+id="八簡化版支付確認-simplified-payment-verification-spv">八、簡化版支付確認
+(Simplified Payment Verification, SPV)</h1>
+<p>有些人會問：「我不想下載整條區塊鏈，只想知道自己收到的比特幣有沒有被確認，行不行？」</p>
+<p>答案是：可以！這就是「簡化版支付確認」（SPV）的用意。</p>
+<ol type="1">
+<li><strong>SPV怎麼運作？</strong>
+<ul>
+<li>你只需要三樣東西：
+<ul>
+<li>最長的區塊鏈「區塊頭」列表（很小很輕）。</li>
+<li>你那筆交易的「Merkle分支」（證明這筆交易真的在某個區塊裡）。</li>
+<li>這筆交易被打包進哪個區塊的時間戳。</li>
+</ul></li>
+<li>這樣你就能確認：
+<ul>
+<li>有完整節點曾經打包這筆交易。</li>
+<li>這個區塊是目前最長鏈的一部分。</li>
+<li>隨著後面區塊越來越多，你的交易就越安全。</li>
+</ul></li>
+</ul></li>
+<li><strong>SPV的好處</strong>
+<ul>
+<li>不用下載整條區塊鏈，手機、平板也能輕鬆驗證收款。</li>
+<li>很多行動錢包、輕錢包（像Electrum、Trust
+Wallet）都是用這種方式。</li>
+</ul></li>
+<li><strong>SPV的風險</strong>
+<ul>
+<li>SPV的安全性還是要靠大多數節點是誠實的。</li>
+<li>如果遇到壞人掌控大部分網路（像51%攻擊），SPV用戶有可能被騙。</li>
+<li>不過一旦發現有可疑，SPV用戶可以選擇下載完整區塊來自己驗證。</li>
+</ul></li>
+</ol>
+<hr />
+<h1
+id="九價值的組合與分割-combining-and-splitting-value">九、價值的組合與分割
+(Combining and Splitting Value)</h1>
+<p>你有沒有想過，比特幣怎麼「找零」？怎麼把一大筆錢拆開來用，或把零錢湊一湊付出去？</p>
+<p>比特幣的「找零」和現金很像，這一切都靠一個叫「UTXO」的設計。</p>
+<ol type="1">
+<li><strong>什麼是UTXO？</strong>
+<ul>
+<li>UTXO就是「尚未花費的交易輸出」（Unspent Transaction Output）。</li>
+<li>你可以把它想像成一張張「找零券」或「現金券」，每一張都記錄著金額和歸屬。</li>
+</ul></li>
+<li><strong>怎麼組合和分割？</strong>
+<ul>
+<li>假設Alice有三張UTXO：2 BTC、3 BTC、1 BTC。</li>
+<li>她要付5 BTC給Bob，就可以把2 BTC和3
+BTC這兩張「現金券」一起用掉。</li>
+<li>如果她用超過的金額（比如2+3+4=9 BTC），多出來的4
+BTC就會自動找零，變成一張新的UTXO回到她自己手上。</li>
+</ul></li>
+<li><strong>每次收錢都會產生新的UTXO</strong>
+<ul>
+<li>Bob收到5 BTC後，這5 BTC就會變成他錢包裡的一張新UTXO。</li>
+<li>以後他要付錢，也會用這張UTXO當作「現金券」來花。</li>
+</ul></li>
+<li><strong>為什麼要這樣設計？</strong>
+<ul>
+<li>這種方式讓比特幣交易可以靈活組合、分割，就像現金一樣方便。</li>
+<li>也讓系統更容易防止雙重支付，因為每張UTXO只能花一次。</li>
+<li>而且每一筆UTXO都能追蹤來源，讓整個系統更透明。</li>
+</ul></li>
+<li><strong>和傳統帳戶有什麼不同？</strong>
+<ul>
+<li>傳統銀行帳戶是「一個帳戶一個餘額」，比特幣則是「一堆UTXO加起來就是你的總額」。</li>
+<li>這樣做可以讓交易更容易並行處理，也比較不容易出現爭議。</li>
+</ul></li>
+</ol>
+<hr />
+<h1 id="十隱私-privacy">十、隱私 (Privacy)</h1>
+<p>你可能會問：「比特幣不是公開透明嗎？那我的隱私怎麼辦？」</p>
+<p>其實，比特幣的隱私設計很有巧思，它不是完全匿名，而是「偽匿名」——
+也就是說，大家看得到交易紀錄，但看不到真實身份。</p>
+<ol type="1">
+<li><strong>怎麼保護隱私？</strong>
+<ul>
+<li>每個人用的是「公鑰」或「地址」來收發比特幣，這些地址不會直接顯示你的名字。</li>
+<li>你可以每次交易都用新的地址，這樣別人就很難把所有交易都連到你身上。</li>
+<li>這有點像股票市場的「號碼牌」，大家只看到號碼，不知道背後是誰。</li>
+</ul></li>
+<li><strong>隱私的限制</strong>
+<ul>
+<li>如果你在交易所用過KYC（身份認證），那麼這個地址就有可能被追蹤到你本人。</li>
+<li>如果一筆交易有多個輸入，這些輸入很可能都屬於同一個人，這也可能被分析出來。</li>
+</ul></li>
+<li><strong>怎麼提升隱私？</strong>
+<ul>
+<li>最簡單的方法就是每次收款都用新地址，盡量不要重複使用同一個地址。</li>
+<li>也可以用混幣服務（像CoinJoin）來增加隱私。</li>
+</ul></li>
+<li><strong>比特幣的隱私意義</strong>
+<ul>
+<li>用戶可以不用靠銀行或政府，也能保有一定程度的財務隱私。</li>
+<li>這種設計也啟發了後來的隱私幣（像Monero、Zcash）和各種混幣技術。</li>
+</ul></li>
+</ol>
+<hr />
+<h1 id="十一計算-calculations">十一、計算 (Calculations)</h1>
+<p>你可能會好奇，比特幣怎麼用數學來保證安全？這裡有個很有趣的概念叫「隨機漫步」，我們用生活化的方式來解釋：</p>
+<ol type="1">
+<li><strong>什麼是隨機漫步？</strong>
+<ul>
+<li>想像你站在一條直線上，每次丟硬幣，正面就往右走一步，反面就往左走一步。</li>
+<li>每一步都是隨機的，走到哪裡完全看運氣，這就叫「隨機漫步」。</li>
+<li>這種走法有個特點：你未來會走到哪裡，只跟你現在的位置有關，跟你怎麼走到這裡來沒關係（這叫「無記憶性」）。</li>
+</ul></li>
+<li><strong>比特幣怎麼用這個概念？</strong>
+<ul>
+<li>在比特幣裡，誠實的礦工和攻擊者就像在比賽誰先走到終點。</li>
+<li>誠實礦工每挖出一個區塊，就往前一步；攻擊者每挖出一個區塊，也往前一步。</li>
+<li>只要誠實礦工的「步數」比攻擊者多，整個系統就很安全。</li>
+</ul></li>
+<li><strong>雙重支付的攻擊機率</strong>
+<ul>
+<li>假設攻擊者想要「重花」一筆錢，他必須自己偷偷挖一條比誠實礦工還長的區塊鏈。</li>
+<li>但只要大多數算力在誠實礦工手上，攻擊者每落後一個區塊，追上的機率就會指數級下降。</li>
+<li>這就像你和朋友賽跑，每落後一步，要追上就越難。</li>
+</ul></li>
+<li><strong>等幾個確認才安全？</strong>
+<ul>
+<li>比特幣建議，收到一筆大額交易時，最好等6個區塊確認（大約1小時），這樣攻擊者想要追上就幾乎不可能。</li>
+<li>小額交易可以等少一點，根據風險自己決定。</li>
+</ul></li>
+<li><strong>數學公式（給有興趣的人）</strong>
+<ul>
+<li>白皮書裡有一個計算攻擊成功機率的公式，基本上就是用「卜瓦松分布」來算。</li>
+<li>只要攻擊者的算力不是大多數，等的區塊越多，安全性就越高。</li>
+</ul></li>
+</ol>
+<hr />
+<p>這樣，比特幣就用簡單的數學和機率，讓大家可以放心地在網路上用「去中心化」的方式交易，不怕被作弊！</p>
+
+    </div>
+    
+    
+    
+    
+    
+    
+    
+</div>
+
+            <footer id="footer">
+    <div id="footer-wrap">
+        <div>
+            &copy;
+            2024 - 2025 t2o0n321.blog
+            <span id="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;t2o0n321
+        </div>
+        <div>
+            Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp;
+            <a target="_blank" rel="noopener" href="https://github.com/theme-particlex/hexo-theme-particlex">ParticleX Theme</a>
+        </div>
+        
+    </div>
+</footer>
+
+        </div>
+        
+        <transition name="fade">
+            <div id="preview" ref="preview" v-show="previewShow">
+                <img id="preview-content" ref="previewContent" />
+            </div>
+        </transition>
+        
+    </div>
+    <script src="/js/main.js"></script>
+    
+    
+
+
+
+
+    
+</body>
+</html>
