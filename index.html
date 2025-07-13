@@ -188,6 +188,166 @@
         
 
 <div class="post">
+    <a href="/2025/07/13/%E5%BE%9E%E9%BB%91%E6%A1%86%E7%B5%82%E7%AB%AF%E5%88%B0%E7%A8%8B%E5%BC%8F%E6%92%B0%E5%AF%AB%E6%96%B0%E4%B8%96%E4%BB%A3/">
+        <h2 class="post-title">從黑框終端到程式撰寫新世代：Claude Code筆記分享</h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2025/7/13
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <h1 id="目錄">目錄</h1>
+<ul>
+<li><a href="#零前言">零、前言</a></li>
+<li><a
+href="#一程式撰寫工具的演進從手動到ai助手">一、程式撰寫工具的演進：從手動到AI助手</a></li>
+<li><a href="#二實用技巧謀定動三訣">二、實用技巧：謀定動三訣</a>
+<ul>
+<li><a href="#1-謀把需求講清楚">1. 謀：把需求講清楚</a></li>
+<li><a href="#2-定拆解任務">2. 定：拆解任務</a></li>
+<li><a href="#3-動快速執行">3. 動：快速執行</a></li>
+</ul></li>
+<li><a href="#三提示詞技巧簡單最好">三、提示詞技巧：簡單最好</a>
+<ul>
+<li><a href="#1-啟動深度思考">1. 啟動深度思考</a></li>
+<li><a href="#2-用正面表達">2. 用正面表達</a></li>
+<li><a href="#3-講清楚標準">3. 講清楚標準</a></li>
+<li><a href="#4-處理長文字">4. 處理長文字</a></li>
+</ul></li>
+<li><a
+href="#四ai的極限人工具模型">四、AI的極限：人、工具、模型</a></li>
+<li><a
+href="#五我的感觸迎接數位時代">五、我的感觸：迎接數位時代</a></li>
+<li><a href="#六參考">六、參考</a></li>
+</ul>
+<h1 id="零前言">零、前言</h1>
+<p>最近看了一段關於Claude
+Code的分享影片，講者海大介紹了這款AI程式撰寫工具的使用心得。作為對AI工具感興趣的讀者，我被他提到的「黑框終端」吸引——都2025年了，號稱最強的程式撰寫工具居然用命令列介面？這也太復古了吧！雖然我平時用的是Gemini
+CLI，但海大的分享讓我對Claude
+Code產生好奇，於是整理這篇筆記，分享他的觀點和我的理解，給有興趣的台灣開發者參考。</p>
+<p>這篇筆記分五部分：<br />
+1. <strong>程式撰寫工具的演進</strong>：從手動寫代碼到AI助手，Claude
+Code為何選終端？<br />
+2.
+<strong>實用技巧</strong>：海大的「謀定動」三訣，效率翻倍的秘訣。<br />
+3. <strong>提示詞技巧</strong>：說清楚需求，讓AI更好用。<br />
+4.
+<strong>AI的極限</strong>：人、工具、模型如何決定程式撰寫的邊界？<br />
+5. <strong>我的感觸</strong>：程式設計師的「數位時代」來了！</p>
+<h1
+id="一程式撰寫工具的演進從手動到ai助手">一、程式撰寫工具的演進：從手動到AI助手</h1>
+<p>海大提到，程式撰寫工具的進化就像科技史的縮影。2000年代，程式設計師全靠手動寫代碼，頂多用簡單的自動補全，比如輸入「.」會跳出屬性選項。2018年，TabNine用GPT-2做到整行代碼補全，當時已經很厲害。2022年ChatGPT、2023年GPT-4的出現更是讓人驚嘆，AI寫代碼的能力甚至超越許多專業人士。2024年，AI內建於編輯器，2025年的Claude
+Code、Cursor等工具不僅補全代碼，還能理解專案、拆解任務，宛如真正的程式撰寫助手。</p>
+<p>Claude
+Code最令人意外的是它選擇命令列介面，而非花俏的圖形介面。為什麼？海大解釋有兩個原因：<br />
+- <strong>編輯器種類繁多</strong>：程式設計師用的工具各異（VS
+Code、Emacs等），命令列是通用的，誰都能用。<br />
+-
+<strong>圖形介面有侷限</strong>：程式撰寫的核心是感知、規劃、執行，與介面好不好看無關。複雜的UI可能反而限制AI。</p>
+<p>命令列的三大優勢是：<br />
+-
+<strong>自由度高</strong>：能直接使用系統所有功能，不受UI框架限制。<br />
+- <strong>操作簡單</strong>：只要說出需求，不用學繁瑣介面。<br />
+- <strong>工具相容</strong>：npm、Docker等命令列工具與終端無縫整合。</p>
+<p>海大說，Claude
+Code雖然看起來陽春，但代碼理解能力超強，效率驚人。它的API額度也很慷慨，一天能用掉價值200美元的token，對資源需求大的開發者來說超划算。</p>
+<h1 id="二實用技巧謀定動三訣">二、實用技巧：謀定動三訣</h1>
+<p>海大的「謀定動」三訣把AI程式撰寫比喻成開車：先確定目的地（謀），規劃路線（定），然後加速前進（動）。這些技巧簡單卻實用，值得一試。</p>
+<h2 id="謀把需求講清楚">1. 謀：把需求講清楚</h2>
+<p>需求不清，AI再強也會出錯。海大的方法是：<br />
+-
+<strong>多討論</strong>：跟AI反覆溝通，確保自己的思路清晰，AI也能找出邏輯漏洞。<br />
+-
+<strong>請AI重述</strong>：讓AI把需求複述一遍，確認雙方理解一致，出錯時好追蹤原因。</p>
+<p>例如，做一個待辦清單（Todo
+List），需求是「支援新增、刪除、標記完成」，跟AI討論後可能會發現忘了提到資料儲存方式。海大說，講清楚需求能減少80%的重工，這點對新手尤其重要。</p>
+<h2 id="定拆解任務">2. 定：拆解任務</h2>
+<p>需求確認後，讓AI制定執行計劃。比如說：「根據需求，列出任務計劃，標出哪些可以同時進行。」AI會給出清單，像先定資料結構、再寫前端介面。有了計劃，後續執行就順暢許多。</p>
+<h2 id="動快速執行">3. 動：快速執行</h2>
+<p>計劃好後，讓AI全速生成代碼。如果出錯：<br />
+- <strong>喊停重來</strong>：按Ctrl+C終止，重新輸入需求。<br />
+- <strong>小修小補</strong>：小問題就補充指令，AI會自行調整。<br />
+-
+<strong>清記憶</strong>：AI偶爾會「卡住」，用類似<code>clear</code>的指令重置。</p>
+<p>其他實用建議：<br />
+- 用<code>git</code>生成專案上下文檔案，幫助AI記錄背景。<br />
+- 為AI寫專用註解，讓它更懂你的意圖。<br />
+-
+常用命令（如啟動前端、檢查錯誤訊息）可存起來重複用，或自訂指令省時間。<br />
+- 新手建議用現成框架（像React腳手架），少走冤枉路。</p>
+<h1 id="三提示詞技巧簡單最好">三、提示詞技巧：簡單最好</h1>
+<p>海大強調，提示詞不用搞得太複雜，關鍵是<strong>講清楚</strong>。Claude
+Code很聰明，簡單的表達效果最好，繁瑣的指令反而可能誤導。</p>
+<h2 id="啟動深度思考">1. 啟動深度思考</h2>
+<p>對AI說「認真思考再回答」，能啟動類似Claude
+Code的<code>thinker</code>功能，讓答案更精準。例如：「分析待辦清單的代碼，找出效能瓶頸並優化。」AI會分步拆解問題，結果更可靠。如果回應太慢，搭配「分步思考」（列出步驟），能減少超時問題。</p>
+<h2 id="用正面表達">2. 用正面表達</h2>
+<p>說「要做什麼」比「不要做什麼」有效。例如：<br />
+- 不要這樣：不要用弱型別、不要寫重複代碼。<br />
+- 要這樣：用TypeScript明確型別、把共用邏輯寫成函式。</p>
+<p>正面表達能讓AI清楚方向，減少混淆。</p>
+<h2 id="講清楚標準">3. 講清楚標準</h2>
+<p>提前說明要求，比如：「我要一個待辦清單，支援所有合法輸入，代碼要簡潔、可維護。如果需求不合理，直接說。」這能避免AI寫出敷衍的代碼。</p>
+<h2 id="處理長文字">4. 處理長文字</h2>
+<p>分析錯誤訊息時，先貼訊息，再寫指令。例如：「根據以上錯誤訊息，找出程式當掉的原因並給解法。」指令放後面，AI理解更準。</p>
+<h1 id="四ai的極限人工具模型">四、AI的極限：人、工具、模型</h1>
+<p>海大用「人-工具-模型」框架分析AI程式撰寫的極限，很有啟發：<br />
+- <strong>模型</strong>：決定AI的能力上限。像Claude
+Code或Gemini這樣的頂尖模型若無法實現某代碼，當前技術就無解。<br />
+- <strong>工具</strong>：Claude
+Code這類工具是模型的外殼，負責優化互動和專案管理。它的命令列設計簡單但高效。<br />
+- <strong>人</strong>：程式設計師有三個角色：<br />
+- <strong>定義者</strong>：清楚表達需求。<br />
+- <strong>審查者</strong>：檢查代碼品質和邏輯。<br />
+- <strong>創作者</strong>：架構設計和創新算法仍需人類智慧。</p>
+<p>AI擅長寫基本功能、改進代碼、生成測試和文件，但突破性創新還得靠人。這個框架讓我更明白如何善用AI工具。</p>
+<h1 id="五我的感觸迎接數位時代">五、我的感觸：迎接數位時代</h1>
+<p>海大提到Claude
+Code宕機時，他手寫代碼花了20多分鐘才完成10分鐘的功能，還想讓AI檢查。這讓我想到自己寫代碼時，總會不自覺想問AI「這段OK嗎」。AI已經悄悄改變了我們的習慣。</p>
+<p>他把這比喻成從「底片時代」到「數位時代」。底片時代，攝影師每按快門都小心翼翼，底片珍貴，構圖全靠經驗。數位時代，記憶卡讓你隨意拍，重點是挑選好照片和後製。程式撰寫也一樣：以前每行代碼都要深思熟慮，現在AI生成多個版本，我們挑最好的、快速調整，核心能力變成寫好提示詞和辨別好代碼。</p>
+<p>基礎原理還是很重要，但AI讓我能專注在更高層的邏輯和創意。這種改變有點不適應，卻也充滿機會——程式撰寫變得更輕鬆，讓我們能把心力放在更有趣的事情上。Claude
+Code的終端設計雖然復古，但效率驚人，改天真想試試看！</p>
+<h1 id="六參考">六、參考</h1>
+<ul>
+<li><a
+target="_blank" rel="noopener" href="https://youtu.be/sOvi9Iu1Dq8?si=R6PpKZIZ0QGZ9j_4">海大的影片</a></li>
+</ul>
+
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        <span class="icon">
+            <i class="fa-solid fa-tags fa-fw"></i>
+        </span>
+        
+        
+        
+        <span class="tag">
+            
+            <a href="/tags/vibe-coding/" style="color: #00bcd4">vibe-coding</a>
+        </span>
+        
+        <span class="tag">
+            
+            <a href="/tags/AI/" style="color: #00a596">AI</a>
+        </span>
+        
+    </div>
+    <a href="/2025/07/13/%E5%BE%9E%E9%BB%91%E6%A1%86%E7%B5%82%E7%AB%AF%E5%88%B0%E7%A8%8B%E5%BC%8F%E6%92%B0%E5%AF%AB%E6%96%B0%E4%B8%96%E4%BB%A3/" class="go-post">閱讀全文</a>
+</div>
+
+<div class="post">
     <a href="/2025/06/25/bitcoin-whitepaper/">
         <h2 class="post-title">Bitcoin White Paper</h2>
     </a>
@@ -639,7 +799,7 @@ BTC就會自動找零，變成一張新的UTXO回到她自己手上。</li>
         
         <span class="tag">
             
-            <a href="/tags/crypto-currencies/" style="color: #ffa2c4">crypto-currencies</a>
+            <a href="/tags/crypto-currencies/" style="color: #03a9f4">crypto-currencies</a>
         </span>
         
     </div>
@@ -869,12 +1029,12 @@ target="_blank" rel="noopener" href="http://localhost:8080/">http://localhost:80
         
         <span class="tag">
             
-            <a href="/tags/setup/" style="color: #00bcd4">setup</a>
+            <a href="/tags/setup/" style="color: #00a596">setup</a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/copypaste/" style="color: #ffa2c4">copypaste</a>
+            <a href="/tags/copypaste/" style="color: #03a9f4">copypaste</a>
         </span>
         
     </div>
@@ -950,7 +1110,7 @@ target="_blank" rel="noopener" href="https://www.trendmicro.com/en_vn/research/1
         
         <span class="tag">
             
-            <a href="/tags/exploit/" style="color: #03a9f4">exploit</a>
+            <a href="/tags/exploit/" style="color: #00a596">exploit</a>
         </span>
         
     </div>
@@ -1491,7 +1651,7 @@ target="_blank" rel="noopener" href="https://www.patreon.com/sandoche">Patreon</
         
         <span class="tag">
             
-            <a href="/tags/crypto-currencies/" style="color: #ffa2c4">crypto-currencies</a>
+            <a href="/tags/crypto-currencies/" style="color: #00bcd4">crypto-currencies</a>
         </span>
         
     </div>
@@ -1815,12 +1975,12 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb22-1"><a href=
         
         <span class="tag">
             
-            <a href="/tags/hexo/" style="color: #ffa2c4">hexo</a>
+            <a href="/tags/hexo/" style="color: #00a596">hexo</a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/setup/" style="color: #ff7d73">setup</a>
+            <a href="/tags/setup/" style="color: #03a9f4">setup</a>
         </span>
         
     </div>
