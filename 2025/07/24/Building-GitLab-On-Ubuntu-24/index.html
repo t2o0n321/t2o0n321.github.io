@@ -1,0 +1,400 @@
+
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="utf-8" />
+    <title>Ubuntu Server 簡單部署 GitLab 社群版 | t2o0n321.blog</title>
+    <meta name="author" content="t2o0n321" />
+    <meta name="description" content="t2o0n321 的部落格，記錄生活點滴、學習筆記、程式開發等。" />
+    <meta name="keywords" content="" />
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
+    <link rel="icon" href="/images/avatar.gif" />
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.5.13/vue.global.prod.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Lexend:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;600;700;800;900&display=swap"
+/>
+<script> const mixins = {}; </script>
+
+<script src="https://polyfill.alicdn.com/v3/polyfill.min.js?features=default"></script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.6.0/highlightjs-line-numbers.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/default.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/bash.min.js"></script>
+<link
+    rel="stylesheet"
+    href="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/styles/github.min.css"
+/>
+<script src="/js/lib/highlight.js"></script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" />
+<script src="/js/lib/math.js"></script>
+
+
+<script src="/js/lib/preview.js"></script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css" />
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body>
+    <div id="layout">
+        <transition name="fade">
+            <div id="loading" v-show="loading">
+                <div id="loading-circle">
+                    <h2>LOADING</h2>
+                    <p>載入過慢請開啟暫存 瀏覽器默認開啟</p>
+                    <img src="/images/loading.gif" />
+                </div>
+            </div>
+        </transition>
+        <div id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
+    <nav id="desktop-menu">
+        <a class="title" href="/">
+            <span>T2O0N321.BLOG</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;Home</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;About</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;Archives</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;Categories</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;Tags</span>
+        </a>
+        
+    </nav>
+    <nav id="mobile-menu">
+        <div class="title" @click="showMenuItems = !showMenuItems">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;T2O0N321.BLOG</span>
+        </div>
+        <transition name="slide">
+            <div class="items" v-show="showMenuItems">
+                
+                <a href="/">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-house fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Home</div>
+                    </div>
+                </a>
+                
+                <a href="/about">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-id-card fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">About</div>
+                    </div>
+                </a>
+                
+                <a href="/archives">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-box-archive fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Archives</div>
+                    </div>
+                </a>
+                
+                <a href="/categories">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-bookmark fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Categories</div>
+                    </div>
+                </a>
+                
+                <a href="/tags">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-tags fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
+                    </div>
+                </a>
+                
+            </div>
+        </transition>
+    </nav>
+</div>
+<transition name="fade">
+    <div id="menu-curtain" @click="showMenuItems = !showMenuItems" v-show="showMenuItems"></div>
+</transition>
+
+        <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
+            <div class="article">
+    <div>
+        <h1>Ubuntu Server 簡單部署 GitLab 社群版</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2025/7/24
+        </span>
+        
+        
+            <span class="tags">
+                <span class="icon">
+                    <i class="fa-solid fa-tags fa-fw"></i>
+                </span>
+                
+                
+                <span class="tag">
+                    
+                    <a href="/tags/gitlab/" style="color: #00bcd4">
+                        gitlab
+                    </a>
+                </span>
+                
+                <span class="tag">
+                    
+                    <a href="/tags/setup/" style="color: #03a9f4">
+                        setup
+                    </a>
+                </span>
+                
+            </span>
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <h1 id="在-ubuntu-24.04-lts-上部署-gitlab-社群版">在 Ubuntu 24.04 LTS
+上部署 GitLab 社群版</h1>
+<p>最近因為團隊協作需求增加，又不想把程式碼丟到第三方伺服器上，於是決定自己架個
+GitLab 來用，這篇文章會一步步帶你把 GitLab 社群版（CE）裝到 Ubuntu 24.04
+LTS 上，從硬體需求到安全設定、共享記憶體調整，還有 HTTPS
+配置，全部講清楚。</p>
+<h2 id="目錄">目錄</h2>
+<ul>
+<li><a href="#硬體需求一覽">硬體需求一覽</a></li>
+<li><a href="#安全性腳本">安全性腳本</a></li>
+<li><a href="#重新設定共享記憶體">重新設定共享記憶體</a></li>
+<li><a href="#更新系統保持最新">更新系統，保持最新</a></li>
+<li><a href="#安裝必要套件">安裝必要套件</a></li>
+<li><a href="#加入-gitlab-repository">加入 GitLab Repository</a></li>
+<li><a href="#安裝-gitLab-ce">安裝 GitLab CE</a></li>
+<li><a href="#找到初始密碼">找到初始密碼</a></li>
+<li><a href="#可選https-設定">HTTPS 設定（可選）</a></li>
+<li><a href="#總結">總結</a></li>
+</ul>
+<h2 id="硬體需求一覽">硬體需求一覽</h2>
+<p>先確認你的伺服器夠不夠力跑 GitLab：</p>
+<table>
+<thead>
+<tr class="header">
+<th>組件</th>
+<th>最低要求</th>
+<th>建議規格</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>CPU</strong></td>
+<td>2 個 vCPU</td>
+<td>2–4 個 vCPU</td>
+</tr>
+<tr class="even">
+<td><strong>記憶體</strong></td>
+<td>4 GB</td>
+<td>6–8 GB</td>
+</tr>
+<tr class="odd">
+<td><strong>硬碟</strong></td>
+<td>20–30 GB (SSD)</td>
+<td>40–60 GB (SSD)</td>
+</tr>
+<tr class="even">
+<td><strong>系統</strong></td>
+<td>Ubuntu 22.04 LTS</td>
+<td>Ubuntu 22.04 LTS</td>
+</tr>
+<tr class="odd">
+<td><strong>SWAP</strong></td>
+<td>2 GB</td>
+<td>2–4 GB</td>
+</tr>
+</tbody>
+</table>
+<h2 id="安全性腳本">安全性腳本</h2>
+<p>為了讓伺服器安全一點，我們可以先跑安全強化腳本。這裡用我在 GitHub
+上發布的一個針對 Ubuntu Server
+的腳本，但它會把共享記憶體（SHM）給限制住，從而導致 GitLab 的 PostgreSQL
+異常，後面得再調整。</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/t2o0n321/linux_server_security.git</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> linux_server_security</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> ./secure_your_server.sh</span></code></pre></div>
+<p><strong>小提醒</strong>：如果你是用 root 帳號 SSH 進來的，這腳本會把
+root 的 SSH 關掉（安全起見）。所以需要先建個 non-root
+帳號，之後用那個來操作。</p>
+<p>跑完腳本，記得重開機讓設定生效：</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> reboot</span></code></pre></div>
+<h2 id="重新設定共享記憶體">重新設定共享記憶體</h2>
+<p>剛剛在上面提到過，安全腳本會把共享記憶體（SHM）嚴格設定，讓 GitLab 的
+PostgreSQL 無法正確運作，所以我們需要先把限制解掉。</p>
+<p>先看看 SHM 服務的狀態：</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl status set-shm-permissions.service</span></code></pre></div>
+<p>會跳出像這樣的資訊：</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">●</span> set-shm-permissions.service <span class="at">-</span> Set /dev/shm permissions and ownership</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>     <span class="ex">Loaded:</span> loaded <span class="er">(</span><span class="ex">/etc/systemd/system/set-shm-permissions.service</span><span class="kw">;</span> <span class="ex">enabled</span><span class="kw">;</span> <span class="ex">preset:</span> enabled<span class="kw">)</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>     <span class="ex">Active:</span> active <span class="er">(</span><span class="ex">exited</span><span class="kw">)</span> <span class="ex">since</span> Thu 2025-07-24 02:53:16 UTC<span class="kw">;</span> <span class="ex">3h</span> 39min ago</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>   <span class="ex">Main</span> PID: 960 <span class="er">(</span><span class="va">code</span><span class="op">=</span>exited, <span class="va">status</span><span class="op">=</span>0/SUCCESS<span class="kw">)</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>        <span class="ex">CPU:</span> 32ms</span></code></pre></div>
+<p>把這服務停掉並禁用：</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl stop set-shm-permissions.service</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl disable set-shm-permissions.service</span></code></pre></div>
+<p>然後重新掛載 <code>/dev/shm</code>，把 <code>noexec</code>
+移除，給它正確的權限：</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> mount <span class="at">-o</span> remount,exec,nosuid,nodev /dev/shm</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> chmod 1777 /dev/shm</span></code></pre></div>
+<p>檢查一下有沒有設好：</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mount</span> <span class="kw">|</span> <span class="fu">grep</span> /dev/shm</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-ld</span> /dev/shm</span></code></pre></div>
+<p>應該會看到：</p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">tmpfs</span> on /dev/shm type tmpfs <span class="er">(</span><span class="ex">rw,nosuid,nodev,size=262144k,inode64</span><span class="kw">)</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxrwxrwt</span> 2 root root 40 Jul 24 06:00 /dev/shm</span></code></pre></div>
+<h2 id="更新系統保持最新">更新系統，保持最新</h2>
+<p>為了安全，系統需要保持最新狀態：</p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update <span class="kw">&amp;&amp;</span> <span class="fu">sudo</span> apt upgrade <span class="at">-y</span></span></code></pre></div>
+<h2 id="安裝必要套件">安裝必要套件</h2>
+<p>GitLab 需要一些基本套件，先安裝起來：</p>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install <span class="at">-y</span> curl openssh-server ca-certificates tzdata perl</span></code></pre></div>
+<h2 id="加入-gitlab-repository">加入 GitLab Repository</h2>
+<p>把 GitLab 社群版的 Repo 加到系統裡：</p>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh <span class="kw">|</span> <span class="fu">sudo</span> bash</span></code></pre></div>
+<h2 id="安裝-gitlab-ce">安裝 GitLab CE</h2>
+<p>現在我們要開始安裝 GitLab CE，記得把 <code>EXTERNAL_URL</code>
+換成你自己的網域：</p>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> EXTERNAL_URL=<span class="st">&quot;http://gitlab.example.com&quot;</span> apt install gitlab-ce</span></code></pre></div>
+<p>把 <code>gitlab.example.com</code> 換成你真的網域，別直接用這個！</p>
+<h2 id="找到初始密碼">找到初始密碼</h2>
+<p>裝好後，GitLab 會給你一個 root 帳號的初始密碼：</p>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> cat /etc/gitlab/initial_root_password <span class="kw">|</span> <span class="fu">grep</span> Password:</span></code></pre></div>
+<p>會看到像這樣：</p>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Password:</span> this_is_your_root_password</span></code></pre></div>
+<p>使用 root 帳號登入後，應立刻將 root
+的預設密碼改掉，並創建普通使用者帳號來使用。</p>
+<p><strong>小提醒</strong>：這密碼只有在沒改過的情況下才能用，而且第一次跑
+<code>gitlab-ctl reconfigure</code> 後 24
+小時會自動不見。如果登不進去，照 <a
+target="_blank" rel="noopener" href="https://docs.gitlab.com/ee/security/reset_user_password.html#reset-your-root-password">GitLab
+官方文件</a> 重設密碼。</p>
+<h2 id="可選https-設定">（可選）HTTPS 設定</h2>
+<p>我們可以加個 HTTPS 讓 GitLab 更安全，首先更改 <code>gitlab.rb</code>
+裡面的設定，記得不要用 Append
+的方式，確確實實的找到對應的區塊修改，避免錯誤：</p>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> nano /etc/gitlab/gitlab.rb</span></code></pre></div>
+<p>改這幾行：</p>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode ruby"><code class="sourceCode ruby"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>external_url <span class="vs">&#39;https://your_domain&#39;</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>letsencrypt<span class="kw">[</span><span class="vs">&#39;enable&#39;</span><span class="kw">]</span> <span class="kw">=</span> <span class="dv">true</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>letsencrypt<span class="kw">[</span><span class="vs">&#39;contact_emails&#39;</span><span class="kw">]</span> <span class="kw">=</span> <span class="kw">[</span><span class="vs">&#39;you@example_mail.com&#39;</span><span class="kw">]</span></span></code></pre></div>
+<p>存檔後，跑重新設定：</p>
+<div class="sourceCode" id="cb17"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> gitlab-ctl reconfigure</span></code></pre></div>
+<h2 id="總結">總結</h2>
+<p>搞定啦，你現在已經在 Ubuntu 24.04 LTS 上把 GitLab
+社群版裝好囉！可以用你設定的網域連上去～</p>
+
+    </div>
+    
+    
+    
+    
+    
+    
+    
+</div>
+
+            <footer id="footer">
+    <div id="footer-wrap">
+        <div>
+            &copy;
+            2024 - 2025 t2o0n321.blog
+            <span id="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;t2o0n321
+        </div>
+        <div>
+            Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp;
+            <a target="_blank" rel="noopener" href="https://github.com/theme-particlex/hexo-theme-particlex">ParticleX Theme</a>
+        </div>
+        
+    </div>
+</footer>
+
+        </div>
+        
+        <transition name="fade">
+            <div id="preview" ref="preview" v-show="previewShow">
+                <img id="preview-content" ref="previewContent" />
+            </div>
+        </transition>
+        
+    </div>
+    <script src="/js/main.js"></script>
+    
+    
+
+
+
+
+    
+</body>
+</html>
