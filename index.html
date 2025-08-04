@@ -347,15 +347,37 @@ Bob。</p>
 <p>Alice 產生一組臨時密鑰（EKA），僅用於此次通訊。</p>
 <h3 id="計算共享密鑰">計算共享密鑰</h3>
 <p>Alice 執行下列四次 DH 計算：</p>
-<pre><code>DH1 = DH(IKA, SPKB)
-DH2 = DH(EKA, IKB)
-DH3 = DH(EKA, SPKB)
-DH4 = DH(EKA, OPKB)
-KAB = KDF(DH1 || DH2 || DH3 || DH4)</code></pre>
-<ul>
-<li><strong>KDF</strong>（Key Derivation Function）用於從多個 DH
-結果推導出最終的共享密鑰 KAB。</li>
-</ul>
+<div class="sourceCode" id="cb2"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>DH1 <span class="op">=</span> <span class="fu">DH</span>(IKA<span class="op">,</span> SPKB) <span class="co">// Alice 的身份私鑰與 Bob 的簽名預密鑰進行 DH 運算。</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>DH2 <span class="op">=</span> <span class="fu">DH</span>(EKA<span class="op">,</span> IKB) <span class="co">// Alice 的臨時私鑰與 Bob 的身份公鑰進行 DH 運算。</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>DH3 <span class="op">=</span> <span class="fu">DH</span>(EKA<span class="op">,</span> SPKB) <span class="co">// Alice 的臨時私鑰與 Bob 的簽名預密鑰進行 DH 運算。</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>DH4 <span class="op">=</span> <span class="fu">DH</span>(EKA<span class="op">,</span> OPKB) <span class="co">// Alice 的臨時私鑰與 Bob 的一次性預密鑰進行 DH 運算。</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>KAB <span class="op">=</span> <span class="fu">KDF</span>(DH1 <span class="op">||</span> DH2 <span class="op">||</span> DH3 <span class="op">||</span> DH4) <span class="co">// 這些運算結果串聯並透過密鑰衍生函數（Key Derivation Function, KDF）生成共享密鑰KAB</span></span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th>運算</th>
+<th>目的</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>DH1、DH2</td>
+<td>確保雙方身份驗證</td>
+</tr>
+<tr class="even">
+<td>DH3、DH4</td>
+<td>提供前向安全性（DH3 和 DH4 使用短期密鑰）</td>
+</tr>
+<tr class="odd">
+<td>DH4</td>
+<td>支援非同步通訊（DH4 使用一次性預密鑰）</td>
+</tr>
+<tr class="even">
+<td>KDF</td>
+<td>增強密鑰多樣性和安全性（多重 DH 結果串聯）</td>
+</tr>
+</tbody>
+</table>
 <img src="/2025/08/04/Understanding-Signal-Protocol-X3DH-Protocol/Key-Generation-Procedure.png" class="">
 <h3 id="發送初始訊息">發送初始訊息</h3>
 <p>Alice 使用共享密鑰 KAB 加密訊息，並一併傳送以下資訊：</p>
@@ -388,27 +410,27 @@ Signal、WhatsApp 在內的通訊平台。</p>
         
         <span class="tag">
             
-            <a href="/tags/Signal/" style="color: #00a596">Signal</a>
+            <a href="/tags/Signal/" style="color: #ff7d73">Signal</a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/Encryption/" style="color: #00bcd4">Encryption</a>
+            <a href="/tags/Encryption/" style="color: #00a596">Encryption</a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/X3DH/" style="color: #ff7d73">X3DH</a>
+            <a href="/tags/X3DH/" style="color: #03a9f4">X3DH</a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/Diffie-Hellman/" style="color: #00bcd4">Diffie-Hellman</a>
+            <a href="/tags/Diffie-Hellman/" style="color: #ffa2c4">Diffie-Hellman</a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/End-to-End-Encryption/" style="color: #ffa2c4">End-to-End Encryption</a>
+            <a href="/tags/End-to-End-Encryption/" style="color: #ff7d73">End-to-End Encryption</a>
         </span>
         
     </div>
@@ -598,7 +620,7 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb17-1"><a href=
         
         <span class="tag">
             
-            <a href="/tags/gitlab/" style="color: #ff7d73">gitlab</a>
+            <a href="/tags/gitlab/" style="color: #00a596">gitlab</a>
         </span>
         
         <span class="tag">
@@ -758,12 +780,12 @@ target="_blank" rel="noopener" href="https://youtu.be/sOvi9Iu1Dq8?si=R6PpKZIZ0QG
         
         <span class="tag">
             
-            <a href="/tags/vibe-coding/" style="color: #00bcd4">vibe-coding</a>
+            <a href="/tags/vibe-coding/" style="color: #ffa2c4">vibe-coding</a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/AI/" style="color: #03a9f4">AI</a>
+            <a href="/tags/AI/" style="color: #00a596">AI</a>
         </span>
         
     </div>
@@ -1222,7 +1244,7 @@ BTC就會自動找零，變成一張新的UTXO回到她自己手上。</li>
         
         <span class="tag">
             
-            <a href="/tags/crypto-currencies/" style="color: #00a596">crypto-currencies</a>
+            <a href="/tags/crypto-currencies/" style="color: #ffa2c4">crypto-currencies</a>
         </span>
         
     </div>
@@ -1452,12 +1474,12 @@ target="_blank" rel="noopener" href="http://localhost:8080/">http://localhost:80
         
         <span class="tag">
             
-            <a href="/tags/setup/" style="color: #03a9f4">setup</a>
+            <a href="/tags/setup/" style="color: #ffa2c4">setup</a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/copypaste/" style="color: #ffa2c4">copypaste</a>
+            <a href="/tags/copypaste/" style="color: #03a9f4">copypaste</a>
         </span>
         
     </div>
