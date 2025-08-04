@@ -1,0 +1,439 @@
+
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="utf-8" />
+    <title>Understanding the Signal Protocol and X3DH Key Agreement | t2o0n321.blog</title>
+    <meta name="author" content="t2o0n321" />
+    <meta name="description" content="t2o0n321 的部落格，記錄生活點滴、學習筆記、程式開發等。" />
+    <meta name="keywords" content="" />
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
+    <link rel="icon" href="/images/avatar.gif" />
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.5.13/vue.global.prod.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Lexend:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;600;700;800;900&display=swap"
+/>
+<script> const mixins = {}; </script>
+
+<script src="https://polyfill.alicdn.com/v3/polyfill.min.js?features=default"></script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.6.0/highlightjs-line-numbers.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/default.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/bash.min.js"></script>
+<link
+    rel="stylesheet"
+    href="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/styles/github.min.css"
+/>
+<script src="/js/lib/highlight.js"></script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" />
+<script src="/js/lib/math.js"></script>
+
+
+<script src="/js/lib/preview.js"></script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css" />
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body>
+    <div id="layout">
+        <transition name="fade">
+            <div id="loading" v-show="loading">
+                <div id="loading-circle">
+                    <h2>LOADING</h2>
+                    <p>載入過慢請開啟暫存 瀏覽器默認開啟</p>
+                    <img src="/images/loading.gif" />
+                </div>
+            </div>
+        </transition>
+        <div id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
+    <nav id="desktop-menu">
+        <a class="title" href="/">
+            <span>T2O0N321.BLOG</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;Home</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;About</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;Archives</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;Categories</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;Tags</span>
+        </a>
+        
+    </nav>
+    <nav id="mobile-menu">
+        <div class="title" @click="showMenuItems = !showMenuItems">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;T2O0N321.BLOG</span>
+        </div>
+        <transition name="slide">
+            <div class="items" v-show="showMenuItems">
+                
+                <a href="/">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-house fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Home</div>
+                    </div>
+                </a>
+                
+                <a href="/about">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-id-card fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">About</div>
+                    </div>
+                </a>
+                
+                <a href="/archives">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-box-archive fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Archives</div>
+                    </div>
+                </a>
+                
+                <a href="/categories">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-bookmark fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Categories</div>
+                    </div>
+                </a>
+                
+                <a href="/tags">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-tags fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
+                    </div>
+                </a>
+                
+            </div>
+        </transition>
+    </nav>
+</div>
+<transition name="fade">
+    <div id="menu-curtain" @click="showMenuItems = !showMenuItems" v-show="showMenuItems"></div>
+</transition>
+
+        <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
+            <div class="article">
+    <div>
+        <h1>Understanding the Signal Protocol and X3DH Key Agreement</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2025/8/4
+        </span>
+        
+        
+            <span class="tags">
+                <span class="icon">
+                    <i class="fa-solid fa-tags fa-fw"></i>
+                </span>
+                
+                
+                <span class="tag">
+                    
+                    <a href="/tags/Signal/" style="color: #00a596">
+                        Signal
+                    </a>
+                </span>
+                
+                <span class="tag">
+                    
+                    <a href="/tags/Encryption/" style="color: #ffa2c4">
+                        Encryption
+                    </a>
+                </span>
+                
+                <span class="tag">
+                    
+                    <a href="/tags/X3DH/" style="color: #00a596">
+                        X3DH
+                    </a>
+                </span>
+                
+                <span class="tag">
+                    
+                    <a href="/tags/Diffie-Hellman/" style="color: #ff7d73">
+                        Diffie-Hellman
+                    </a>
+                </span>
+                
+                <span class="tag">
+                    
+                    <a href="/tags/End-to-End-Encryption/" style="color: #00a596">
+                        End-to-End Encryption
+                    </a>
+                </span>
+                
+            </span>
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <blockquote>
+<p>本文翻譯並改進自 <a
+target="_blank" rel="noopener" href="https://blog.yarsalabs.com/understanding-signal-protocol-for-end-to-end-encryption/">Yarsa
+Labs 部落格文章</a>。</p>
+</blockquote>
+<h1 id="目錄">目錄</h1>
+<ul>
+<li><a href="#前言">前言</a></li>
+<li><a href="#簡介">簡介</a></li>
+<li><a href="#用戶註冊時的密鑰生成">用戶註冊時的密鑰生成</a>
+<ul>
+<li><a
+href="#迪菲-赫爾曼密鑰交換算法diffie-hellman-key-exchange">迪菲-赫爾曼密鑰交換算法（Diffie-Hellman
+Key Exchange）</a></li>
+<li><a href="#x3dh-密鑰協議extended-triple-diffie-hellman">X3DH
+密鑰協議（Extended Triple Diffie-Hellman）</a>
+<ul>
+<li><a href="#發佈預密鑰prekeys">發佈預密鑰（Prekeys）</a></li>
+<li><a href="#傳送訊息">傳送訊息</a></li>
+<li><a href="#驗證預密鑰包">驗證預密鑰包</a></li>
+<li><a href="#生成臨時密鑰ephemeral-key">生成臨時密鑰（Ephemeral
+Key）</a></li>
+<li><a href="#計算共享密鑰">計算共享密鑰</a></li>
+<li><a href="#發送初始訊息">發送初始訊息</a></li>
+<li><a href="#訊息解密">訊息解密</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#結論">結論</a></li>
+</ul>
+<h1 id="前言">前言</h1>
+<p>在數位時代，科技公司經常蒐集用戶的個人資訊，而 Signal
+憑藉其強大的端對端加密（End-to-End Encryption,
+E2EE）技術而受到矚目，將用戶隱私放在首位。該應用程式獲得了多位關注隱私權的知名人士支持，例如愛德華·斯諾登（Edward
+Snowden）、馬克·祖克柏（Mark Zuckerberg）及伊隆·馬斯克（Elon
+Musk），成為重視通訊隱私人士的首選工具。</p>
+<h1 id="簡介">簡介</h1>
+<p>在典型的即時通訊應用中，用戶透過「可信任」的伺服器進行通訊，伺服器負責接收並轉發訊息。這樣的架構要求用戶對伺服器高度信任，預期其不會濫用或外洩資料。然而，若伺服器遭到入侵，攻擊者可能竊取所有未加密的訊息內容。</p>
+<p>Signal 協議（Signal
+Protocol）是一種開源的端對端加密協議，旨在確保訊息的明文僅存在於通訊雙方的客戶端設備上。即使伺服器被攻擊，攻擊者也無法解密訊息。此外，Signal
+協議具備前向安全性（Forward Secrecy）與後向安全性（Backward
+Secrecy），確保歷史通訊在密鑰洩露後依然保密。</p>
+<h1 id="用戶註冊時的密鑰生成">用戶註冊時的密鑰生成</h1>
+<h2
+id="迪菲-赫爾曼密鑰交換算法diffie-hellman-key-exchange">迪菲-赫爾曼密鑰交換算法（Diffie-Hellman
+Key Exchange）</h2>
+<p>要理解 Signal
+協議的端對端加密機制，需先瞭解迪菲-赫爾曼密鑰交換算法（Diffie-Hellman
+Key Exchange,
+DH）。此算法允許雙方在不直接傳輸秘密的情況下，透過公開通道建立共享秘密（Shared
+Secret）。其安全性基於離散對數問題（Discrete Logarithm
+Problem）的計算困難性。</p>
+<p>假設有兩位用戶 Alice 和
+Bob，以及一個公開伺服器，伺服器儲存以下兩個參數：</p>
+<ul>
+<li><strong>g</strong>：一個小的質數，作為生成元（Generator）。</li>
+<li><strong>n</strong>：一個非常大的質數（通常為 2000 至 4000
+位元），確保計算複雜度。</li>
+</ul>
+<p>密鑰交換流程如下：</p>
+<ol type="1">
+<li><strong>生成私鑰（Private Key）</strong>：Alice 和 Bob 各自生成私鑰
+<code>a</code> 與 <code>b</code>，其中 <code>1 ≤ x ≤ n</code>。</li>
+<li><strong>生成公鑰（Public Key）</strong>：
+<ul>
+<li>Alice 計算公鑰為 <code>(g ^ a) % n</code></li>
+<li>Bob 計算公鑰為 <code>(g ^ b) % n</code></li>
+</ul></li>
+<li><strong>交換並計算共享秘密</strong>：
+<ul>
+<li>Alice 使用 Bob 的公鑰計算 <code>((g ^ b) % n) ^ a % n</code></li>
+<li>Bob 使用 Alice 的公鑰計算 <code>((g ^ a) % n) ^ b % n</code></li>
+</ul></li>
+</ol>
+<p>由於模冪運算的交換性質，兩者所得結果相同，成為雙方共享的秘密。</p>
+<p>以下為 TypeScript 實作範例：</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">// 假設 g = 11, n = 100（實際應用中 n 應為大質數）</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> g <span class="op">=</span> <span class="dv">11</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> n <span class="op">=</span> <span class="dv">100</span><span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> a <span class="op">=</span> <span class="fu">randomIntFromInterval</span>(<span class="dv">1</span><span class="op">,</span> n)<span class="op">;</span> <span class="co">// Alice 的私鑰</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> b <span class="op">=</span> <span class="fu">randomIntFromInterval</span>(<span class="dv">1</span><span class="op">,</span> n)<span class="op">;</span> <span class="co">// Bob 的私鑰</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> a_key <span class="op">=</span> <span class="fu">modExp</span>(g<span class="op">,</span> a<span class="op">,</span> n)<span class="op">;</span> <span class="co">// Alice 的公鑰</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> b_key <span class="op">=</span> <span class="fu">modExp</span>(g<span class="op">,</span> b<span class="op">,</span> n)<span class="op">;</span> <span class="co">// Bob 的公鑰</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> a_shared_secret <span class="op">=</span> <span class="fu">modExp</span>(b_key<span class="op">,</span> a<span class="op">,</span> n)<span class="op">;</span> <span class="co">// Alice 的共享秘密</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> b_shared_secret <span class="op">=</span> <span class="fu">modExp</span>(a_key<span class="op">,</span> b<span class="op">,</span> n)<span class="op">;</span> <span class="co">// Bob 的共享秘密</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="vs">`共享秘密是否相同：</span><span class="sc">$&#123;</span>a_shared_secret <span class="op">===</span> b_shared_secret<span class="sc">&#125;</span><span class="vs">`</span>)<span class="op">;</span> <span class="co">// true</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">randomIntFromInterval</span>(min<span class="op">:</span> <span class="dt">number</span><span class="op">,</span> max<span class="op">:</span> <span class="dt">number</span>) &#123;</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">floor</span>(<span class="bu">Math</span><span class="op">.</span><span class="fu">random</span>() <span class="op">*</span> (max <span class="op">-</span> min <span class="op">+</span> <span class="dv">1</span>) <span class="op">+</span> min)<span class="op">;</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>&#125;</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">modExp</span>(base<span class="op">:</span> <span class="dt">number</span><span class="op">,</span> exponent<span class="op">:</span> <span class="dt">number</span><span class="op">,</span> modulus<span class="op">:</span> <span class="dt">number</span>) &#123;</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (modulus <span class="op">===</span> <span class="dv">1</span>) <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> result <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  base <span class="op">=</span> base <span class="op">%</span> modulus<span class="op">;</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> (exponent <span class="op">&gt;</span> <span class="dv">0</span>) &#123;</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (exponent <span class="op">%</span> <span class="dv">2</span> <span class="op">===</span> <span class="dv">1</span>) &#123;</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>      result <span class="op">=</span> (result <span class="op">*</span> base) <span class="op">%</span> modulus<span class="op">;</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    &#125;</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    exponent <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">floor</span>(exponent <span class="op">/</span> <span class="dv">2</span>)<span class="op">;</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    base <span class="op">=</span> (base <span class="op">*</span> base) <span class="op">%</span> modulus<span class="op">;</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>  &#125;</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> result<span class="op">;</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>&#125;</span></code></pre></div>
+<h2 id="x3dh-密鑰協議extended-triple-diffie-hellman">X3DH
+密鑰協議（Extended Triple Diffie-Hellman）</h2>
+<p>擴展三重迪菲-赫爾曼（Extended Triple Diffie-Hellman,
+X3DH）是專為非同步通訊場景設計的密鑰交換協議。由於用戶可能在不同時間上線，傳統
+DH 協議無法直接應用，X3DH
+透過預儲密鑰（Prekeys）實現靈活且安全的初始密鑰協議。</p>
+<h3 id="發佈預密鑰prekeys">發佈預密鑰（Prekeys）</h3>
+<p>當 Bob 註冊 Signal 時，會上傳以下資訊至伺服器：</p>
+<ul>
+<li><strong>身份密鑰（Identity Key,
+IKB）</strong>：長期公鑰，用於身份驗證。</li>
+<li><strong>簽名預密鑰（Signed Prekey,
+SPKB）</strong>：有效期中長的公鑰，需定期輪替。</li>
+<li><strong>預密鑰簽名（Sig(IKB, SPKB)）</strong>：使用 IKB 對 SPKB
+的簽名。</li>
+<li><strong>一次性預密鑰（One-Time Prekeys,
+OPKB）</strong>：供一次性使用的公鑰組。</li>
+</ul>
+<h3 id="傳送訊息">傳送訊息</h3>
+<p>當 Alice 欲向 Bob 發送訊息時，會從伺服器取得 Bob 的預密鑰包（Prekey
+Bundle），其中包含：</p>
+<ul>
+<li>Bob 的身份密鑰（IKB）</li>
+<li>Bob 的簽名預密鑰（SPKB）</li>
+<li>預密鑰簽名（Sig）</li>
+<li>一組一次性預密鑰（OPKB）</li>
+</ul>
+<h3 id="驗證預密鑰包">驗證預密鑰包</h3>
+<p>Alice 使用 Bob 的身份密鑰驗證 SPKB 的簽名，確認密鑰未遭竄改且來自
+Bob。</p>
+<h3 id="生成臨時密鑰ephemeral-key">生成臨時密鑰（Ephemeral Key）</h3>
+<p>Alice 產生一組臨時密鑰（EKA），僅用於此次通訊。</p>
+<h3 id="計算共享密鑰">計算共享密鑰</h3>
+<p>Alice 執行下列四次 DH 計算：</p>
+<pre><code>DH1 = DH(IKA, SPKB)
+DH2 = DH(EKA, IKB)
+DH3 = DH(EKA, SPKB)
+DH4 = DH(EKA, OPKB)
+KAB = KDF(DH1 || DH2 || DH3 || DH4)</code></pre>
+<ul>
+<li><strong>KDF</strong>（Key Derivation Function）用於從多個 DH
+結果推導出最終的共享密鑰 KAB。</li>
+</ul>
+<img src="/2025/08/04/Understanding-Signal-Protocol-X3DH-Protocol/Key-Generation-Procedure.png" class="">
+<h3 id="發送初始訊息">發送初始訊息</h3>
+<p>Alice 使用共享密鑰 KAB 加密訊息，並一併傳送以下資訊：</p>
+<ul>
+<li>Alice 的身份密鑰（IKA）</li>
+<li>Alice 的臨時密鑰（EKA）</li>
+<li>Bob 的一次性預密鑰索引</li>
+<li>加密後的初始密文</li>
+</ul>
+<h3 id="訊息解密">訊息解密</h3>
+<p>Bob 接收訊息後，執行相同的 DH 計算程序產生
+KAB，解密訊息並驗證其正確性。使用後的一次性預密鑰會被刪除，進一步確保訊息無法在未來被重複解密。</p>
+<h1 id="結論">結論</h1>
+<p>Signal 協議透過 X3DH
+密鑰協議，在公開伺服器的前提下安全建立共享密鑰，實現真正的端對端加密。其前向與後向安全特性使歷史訊息在密鑰洩露後仍能保密。此協議目前已廣泛應用於包括
+Signal、WhatsApp 在內的通訊平台。</p>
+<p>如需深入了解，可參考 <a target="_blank" rel="noopener" href="https://signal.org/docs/">Signal
+官方文件</a>。</p>
+
+    </div>
+    
+    
+    
+    
+    
+    
+    
+</div>
+
+            <footer id="footer">
+    <div id="footer-wrap">
+        <div>
+            &copy;
+            2024 - 2025 t2o0n321.blog
+            <span id="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;t2o0n321
+        </div>
+        <div>
+            Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp;
+            <a target="_blank" rel="noopener" href="https://github.com/theme-particlex/hexo-theme-particlex">ParticleX Theme</a>
+        </div>
+        
+    </div>
+</footer>
+
+        </div>
+        
+        <transition name="fade">
+            <div id="preview" ref="preview" v-show="previewShow">
+                <img id="preview-content" ref="previewContent" />
+            </div>
+        </transition>
+        
+    </div>
+    <script src="/js/main.js"></script>
+    
+    
+
+
+
+
+    
+</body>
+</html>
