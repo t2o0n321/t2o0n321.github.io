@@ -182,28 +182,28 @@
                 
                 <span class="tag">
                     
-                    <a href="/tags/Signal/" style="color: #00a596">
+                    <a href="/tags/Signal/" style="color: #ffa2c4">
                         Signal
                     </a>
                 </span>
                 
                 <span class="tag">
                     
-                    <a href="/tags/Encryption/" style="color: #ffa2c4">
+                    <a href="/tags/Encryption/" style="color: #03a9f4">
                         Encryption
                     </a>
                 </span>
                 
                 <span class="tag">
                     
-                    <a href="/tags/X3DH/" style="color: #00bcd4">
+                    <a href="/tags/X3DH/" style="color: #ffa2c4">
                         X3DH
                     </a>
                 </span>
                 
                 <span class="tag">
                     
-                    <a href="/tags/Diffie-Hellman/" style="color: #ff7d73">
+                    <a href="/tags/Diffie-Hellman/" style="color: #00a596">
                         Diffie-Hellman
                     </a>
                 </span>
@@ -388,7 +388,8 @@ EKA）</strong>：僅用於當前通訊的短期密鑰，用後即棄。</p>
 <li><strong>計算關聯數據</strong>：使用 Alice 和 Bob
 的身份密鑰生成關聯數據（Associated Data），用於額外認證。</li>
 <li><strong>發送初始訊息</strong>：Alice 使用 KAB
-加密訊息，並發送以下資訊：
+加密訊息（Signal會啟用「雙棘輪演算法（Double
+Ratchet）」機制加密訊息），並發送以下資訊：
 <ul>
 <li>她的身份密鑰（IKA）</li>
 <li>她的臨時密鑰（EKA）</li>
