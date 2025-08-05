@@ -189,28 +189,28 @@
                 
                 <span class="tag">
                     
-                    <a href="/tags/Encryption/" style="color: #03a9f4">
+                    <a href="/tags/Encryption/" style="color: #00a596">
                         Encryption
                     </a>
                 </span>
                 
                 <span class="tag">
                     
-                    <a href="/tags/X3DH/" style="color: #ffa2c4">
+                    <a href="/tags/X3DH/" style="color: #00bcd4">
                         X3DH
                     </a>
                 </span>
                 
                 <span class="tag">
                     
-                    <a href="/tags/Diffie-Hellman/" style="color: #00a596">
+                    <a href="/tags/Diffie-Hellman/" style="color: #ff7d73">
                         Diffie-Hellman
                     </a>
                 </span>
                 
                 <span class="tag">
                     
-                    <a href="/tags/End-to-End-Encryption/" style="color: #ffa2c4">
+                    <a href="/tags/End-to-End-Encryption/" style="color: #00bcd4">
                         End-to-End Encryption
                     </a>
                 </span>
@@ -377,7 +377,8 @@ EKA）</strong>：僅用於當前通訊的短期密鑰，用後即棄。</p>
 的身份密鑰（IKB）、簽名預生成密鑰（SPKB）、預密鑰簽名（Sig）及一組一次性預生成密鑰（OPKB）。</li>
 <li><strong>驗證簽名</strong>：使用 Bob 的身份公鑰驗證 SPKB
 的簽名，確認密鑰真實性。若驗證失敗，協議繼續但安全性降低。</li>
-<li><strong>計算共享密鑰</strong>：Alice 執行四次 DH 計算：</li>
+<li><strong>計算共享密鑰</strong>：Alice 執行四次 DH 計算，得到 KAB（Key
+Agreement Result）：</li>
 </ol>
 <div class="sourceCode" id="cb2"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>DH1 <span class="op">=</span> <span class="fu">DH</span>(IKA<span class="op">,</span> SPKB) <span class="co">// Alice 的身份私鑰與 Bob 的簽名預密鑰</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>DH2 <span class="op">=</span> <span class="fu">DH</span>(EKA<span class="op">,</span> IKB) <span class="co">// Alice 的臨時私鑰與 Bob 的身份公鑰</span></span>
@@ -427,6 +428,10 @@ Ratchet）」機制加密訊息），並發送以下資訊：
 </tbody>
 </table>
 <img src="/2025/08/04/Understanding-Signal-Protocol-X3DH-Protocol/Key-Generation-Procedure.png" class="">
+<ol start="7" type="1">
+<li>底下是我整理的 X3DH 總流程圖：</li>
+</ol>
+<img src="/2025/08/04/Understanding-Signal-Protocol-X3DH-Protocol/X3DH.png" class="">
 <h3 id="bob-的訊息處理與驗證">Bob 的訊息處理與驗證</h3>
 <p>Bob 接收 Alice 的訊息後：</p>
 <ol type="1">
