@@ -1,0 +1,505 @@
+
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="utf-8" />
+    <title>Polkadot 生態終極指南：從底層架構解析到手把手開發一條區塊鏈 | t2o0n321.blog</title>
+    <meta name="author" content="t2o0n321" />
+    <meta name="description" content="t2o0n321 的部落格，記錄生活點滴、學習筆記、程式開發等。" />
+    <meta name="keywords" content="" />
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
+    <link rel="icon" href="/images/avatar.gif" />
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.5.13/vue.global.prod.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Lexend:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;600;700;800;900&display=swap"
+/>
+<script> const mixins = {}; </script>
+
+<script src="https://polyfill.alicdn.com/v3/polyfill.min.js?features=default"></script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.6.0/highlightjs-line-numbers.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/default.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/bash.min.js"></script>
+<link
+    rel="stylesheet"
+    href="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/styles/github.min.css"
+/>
+<script src="/js/lib/highlight.js"></script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" />
+<script src="/js/lib/math.js"></script>
+
+
+<script src="/js/lib/preview.js"></script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css" />
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body>
+    <div id="layout">
+        <transition name="fade">
+            <div id="loading" v-show="loading">
+                <div id="loading-circle">
+                    <h2>LOADING</h2>
+                    <p>載入過慢請開啟暫存 瀏覽器默認開啟</p>
+                    <img src="/images/loading.gif" />
+                </div>
+            </div>
+        </transition>
+        <div id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
+    <nav id="desktop-menu">
+        <a class="title" href="/">
+            <span>T2O0N321.BLOG</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;Home</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;About</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;Archives</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;Categories</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;Tags</span>
+        </a>
+        
+    </nav>
+    <nav id="mobile-menu">
+        <div class="title" @click="showMenuItems = !showMenuItems">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;T2O0N321.BLOG</span>
+        </div>
+        <transition name="slide">
+            <div class="items" v-show="showMenuItems">
+                
+                <a href="/">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-house fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Home</div>
+                    </div>
+                </a>
+                
+                <a href="/about">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-id-card fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">About</div>
+                    </div>
+                </a>
+                
+                <a href="/archives">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-box-archive fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Archives</div>
+                    </div>
+                </a>
+                
+                <a href="/categories">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-bookmark fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Categories</div>
+                    </div>
+                </a>
+                
+                <a href="/tags">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-tags fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
+                    </div>
+                </a>
+                
+            </div>
+        </transition>
+    </nav>
+</div>
+<transition name="fade">
+    <div id="menu-curtain" @click="showMenuItems = !showMenuItems" v-show="showMenuItems"></div>
+</transition>
+
+        <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
+            <div class="article">
+    <div>
+        <h1>Polkadot 生態終極指南：從底層架構解析到手把手開發一條區塊鏈</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2025/11/21
+        </span>
+        
+        <span class="category">
+            <a href="/categories/%E5%8D%80%E5%A1%8A%E9%8F%88%E6%8A%80%E8%A1%93/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                區塊鏈技術
+            </a>
+        </span>
+        
+        
+            <span class="tags">
+                <span class="icon">
+                    <i class="fa-solid fa-tags fa-fw"></i>
+                </span>
+                
+                
+                <span class="tag">
+                    
+                    <a href="/tags/Polkadot/" style="color: #00a596">
+                        Polkadot
+                    </a>
+                </span>
+                
+                <span class="tag">
+                    
+                    <a href="/tags/Substrate/" style="color: #ffa2c4">
+                        Substrate
+                    </a>
+                </span>
+                
+                <span class="tag">
+                    
+                    <a href="/tags/Blockchain-Development/" style="color: #ff7d73">
+                        Blockchain Development
+                    </a>
+                </span>
+                
+                <span class="tag">
+                    
+                    <a href="/tags/crypto-currencies/" style="color: #00bcd4">
+                        crypto-currencies
+                    </a>
+                </span>
+                
+                <span class="tag">
+                    
+                    <a href="/tags/Rust/" style="color: #00a596">
+                        Rust
+                    </a>
+                </span>
+                
+                <span class="tag">
+                    
+                    <a href="/tags/Web3/" style="color: #00bcd4">
+                        Web3
+                    </a>
+                </span>
+                
+            </span>
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <p>在 Web3
+的浩瀚宇宙中，比特幣是開天闢地的創世神，以太坊是萬物生長的智慧平台，而
+<strong>Polkadot（波卡）</strong>
+則是連結星系的星際樞紐。很多人對波卡的印象停留在「跨鏈」二字，但這只是冰山一角。波卡真正的願景是建立一個
+<strong>Layer 0（第零層）</strong> 的基礎設施，讓其他的區塊鏈（Layer
+1）能夠在其之上快速構建、共享安全並無縫互通。</p>
+<p>本文分為兩大部分：</p>
+<ol type="1">
+<li><p><strong>深度理論篇</strong>：解析 Polkadot
+的技術架構與專有名詞。</p></li>
+<li><p><strong>硬核實戰篇</strong>：基於最新的 Substrate
+框架，教你如何在本地電腦上架設一條私有區塊鏈。</p></li>
+</ol>
+<hr />
+<h1 id="第一部分polkadot-技術架構全景解析">第一部分：Polkadot
+技術架構全景解析</h1>
+<h2 id="核心架構機場與航空公司的博弈">1.
+核心架構：機場與航空公司的博弈</h2>
+<p>Polkadot
+的設計是為了並行處理交易，解決傳統區塊鏈的擴展性瓶頸。它的架構可以比喻為一個巨大的國際機場。</p>
+<figure>
+<img
+src="https://docs.polkadot.com/images/polkadot-protocol/architecture/polkadot-chain/overview/overview-1.webp"
+alt="Polkadot 架構示意圖" />
+<figcaption aria-hidden="true">Polkadot 架構示意圖</figcaption>
+</figure>
+<h3 id="中繼鏈-relay-chain---系統的心臟">1.1 中繼鏈 (Relay Chain) -
+系統的心臟</h3>
+<p>這是波卡的主鏈。它非常簡約，不支援複雜的智能合約（Smart
+Contracts），只負責「最核心」的任務：</p>
+<ul>
+<li><p><strong>全網安全 (Shared
+Security)</strong>：所有連接的鏈都由中繼鏈的驗證人保護，這意味著平行鏈不需要自己尋找礦工。</p></li>
+<li><p><strong>共識
+(Consensus)</strong>：確認區塊的最終性，保證帳本不可篡改。</p></li>
+<li><p><strong>互操作性
+(Interoperability)</strong>：處理跨鏈訊息的路由，像塔台一樣調度資訊。</p></li>
+</ul>
+<h3 id="平行鏈-parachain-獨立的主權國家">1.2 平行鏈 (Parachain) —
+獨立的主權國家</h3>
+<p>平行鏈是連接在中繼鏈上的獨立區塊鏈。它們擁有極高的自主權：</p>
+<ul>
+<li><p><strong>客製化</strong>：可以設計自己的代幣經濟、治理規則，甚至共識算法（只要區塊生成邏輯符合波卡標準）。</p></li>
+<li><p><strong>業務專精</strong>：有的鏈專做 DeFi（如 Acala），有的專做
+NFT，有的專做隱私保護。</p></li>
+</ul>
+<h3 id="平行執行緒-parathread-共享辦公室">1.3 平行執行緒 (Parathread) —
+共享辦公室</h3>
+<p>對於不需要 24
+小時佔用昂貴插槽的小型項目，波卡提供了「平行執行緒」。它們與平行鏈的 API
+完全相同，區別在於它們是<strong>「按區塊付費」
+(Pay-as-you-go)</strong>，只有在需要處理交易時才競標區塊空間。</p>
+<h3 id="橋-bridges-連接外部世界">1.4 橋 (Bridges) — 連接外部世界</h3>
+<p>波卡不是封閉的。透過「橋」，波卡可以與比特幣、以太坊等完全不同的區塊鏈網絡進行雙向通訊和資產轉移。</p>
+<hr />
+<h2 id="關鍵專有名詞詳解-glossary">2. 關鍵專有名詞詳解 (Glossary)</h2>
+<p>為了讀懂波卡的技術文檔，以下名詞必須徹底掌握：</p>
+<h3 id="共識機制類">➤ 共識機制類</h3>
+<ul>
+<li><p><strong>NPoS (Nominated Proof-of-Stake，提名權益證明)</strong>：
+波卡的共識機制。不同於普通的 PoS，它引入了<strong>提名人
+(Nominator)</strong> 的角色。持有 DOT
+的用戶可以質押代幣並「提名」值得信任的驗證人。這不僅增加了作惡的成本，也讓普通用戶能參與維護網絡安全。</p></li>
+<li><p><strong>BABE (Blind Assignment for Blockchain
+Extension)</strong>：
+負責<strong>區塊生產</strong>的算法。它將時間劃分為 Epoch（紀元）和
+Slot（時隙），通過隨機數決定誰有權利在當前時隙打包區塊。這保證了出塊的速度和隨機性。</p></li>
+<li><p><strong>GRANDPA (GHOST-based Recursive Ancestor Deriving Prefix
+Agreement)</strong>： 負責<strong>區塊最終性 (Finality)</strong>
+的算法。與 BABE 不同，GRANDPA
+不是一個個確認區塊，而是可以一次性確認一連串的區塊。這就是為什麼波卡的交易確認速度極快且不可逆轉。</p>
+<blockquote>
+<p><strong>混合共識 (Hybrid Consensus)</strong>：波卡將「出塊」(BABE)
+和「確認」(GRANDPA) 分離，這是其技術上的一大創新。</p>
+</blockquote></li>
+</ul>
+<h3 id="執行環境類">➤ 執行環境類</h3>
+<ul>
+<li><p><strong>Wasm (WebAssembly)</strong>： 波卡的「運行時
+(Runtime)」邏輯是編譯成 Wasm
+二進制文件的。這是一種高效的、跨平台的指令格式。這意味著波卡可以在瀏覽器裡運行輕節點，更重要的是實現了<strong>無分叉升級</strong>。</p></li>
+<li><p><strong>Runtime (運行時)</strong>：
+區塊鏈的「大腦」，包含了狀態轉換邏輯（例如：轉帳時餘額怎麼變、治理投票怎麼算）。在波卡中，Runtime
+存儲在鏈上，可以隨時通過治理投票進行替換（升級）。</p></li>
+</ul>
+<h3 id="跨鏈通訊類">➤ 跨鏈通訊類</h3>
+<ul>
+<li><p><strong>XCM (Cross-Consensus Messaging format)</strong>：
+這不僅僅是跨鏈，而是「跨共識」訊息格式。它是一種<strong>語言標準</strong>，規定了鏈與鏈之間如何發送指令（例如：「把這
+10 個代幣轉到你的鏈上」）。</p></li>
+<li><p><strong>XCMP (Cross-Chain Message Passing)</strong>：
+這是<strong>傳輸協議</strong>，負責將 XCM
+消息從一條鏈實際運送到另一條鏈。</p></li>
+</ul>
+<hr />
+<h2 id="波卡-2.0從插槽到coretime">3. 波卡
+2.0：從「插槽」到「Coretime」</h2>
+<p><em>(這是目前最前沿的發展，務必了解)</em></p>
+<p>在舊的波卡模型中，項目方需要通過<strong>插槽拍賣 (Slot
+Auction)</strong> 鎖定大量 DOT
+來租賃兩年的使用權。這對初創項目門檻太高。</p>
+<p><strong>Polkadot 2.0</strong> 引入了 <strong>Agile Coretime
+(敏捷核心時間)</strong> 的概念：</p>
+<ul>
+<li><p>不再有死板的插槽租賃。</p></li>
+<li><p>區塊空間（Coretime）變成了可以像雲端伺服器一樣隨時購買的商品。</p></li>
+<li><p>你可以買一個月，也可以只買一個區塊的運算時間。這將徹底釋放波卡的靈活性。</p></li>
+</ul>
+<hr />
+<h1 id="第二部分硬核實戰-從零架設你的第一條區塊鏈">第二部分：硬核實戰 ——
+從零架設你的第一條區塊鏈</h1>
+<p>現在，我們進入動手環節。舊版教學通常使用早期的 Substrate
+模板，現在已經過時。我們將使用最新的 <strong>Polkadot SDK (Substrate
+Node Template)</strong> 來進行教學。</p>
+<p><strong>目標</strong>：在你的電腦上編譯並運行一條基於 Substrate
+的區塊鏈，並與其互動。</p>
+<h2 id="環境準備-prerequisites">1. 環境準備 (Prerequisites)</h2>
+<p>Substrate 是用 <strong>Rust</strong> 語言編寫的，因此你需要一個強大的
+Rust 開發環境。</p>
+<p><em>(以下指令以 Linux/macOS 為主，Windows 用戶建議使用 WSL2)</em></p>
+<h3 id="第一步安裝依賴項">第一步：安裝依賴項</h3>
+<p>打開終端機 (Terminal)，輸入以下指令安裝編譯所需的基礎庫：</p>
+<p><strong>Ubuntu/Debian 用戶：</strong></p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install <span class="at">-y</span> git clang curl libssl-dev llvm libudev-dev make protobuf-compiler</span></code></pre></div>
+<p><strong>macOS 用戶 (需先安裝 Homebrew)：</strong></p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode zsh"><code class="sourceCode zsh"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install openssl protobuf</span></code></pre></div>
+<h3 id="第二步安裝-rust-工具鏈">第二步：安裝 Rust 工具鏈</h3>
+<p>Substrate 需要使用 Rust 的 nightly 版本來編譯 Wasm 部分。</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 下載並安裝 rustup</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">--proto</span> <span class="st">&#39;=https&#39;</span> <span class="at">--tlsv1.2</span> <span class="at">-sSf</span> https://sh.rustup.rs <span class="kw">|</span> <span class="fu">sh</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 配置環境變數（或者重啟終端機）</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> <span class="va">$HOME</span>/.cargo/env</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 將 Rust 切換到 stable 版本作為默認</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="ex">rustup</span> default stable</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 安裝 nightly 版本以及 wasm 編譯目標</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="ex">rustup</span> update</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="ex">rustup</span> update nightly</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="ex">rustup</span> target add wasm32-unknown-unknown <span class="at">--toolchain</span> nightly</span></code></pre></div>
+<h2 id="下載與編譯節點-build-the-chain">2. 下載與編譯節點 (Build the
+Chain)</h2>
+<p>我們將使用 Parity 官方提供的 Substrate Node
+Template。這是一個最小化的區塊鏈模板，就像是樂高積木的底板，你可以在上面添加任何功能。</p>
+<h3 id="第一步複製源碼">第一步：複製源碼</h3>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/substrate-developer-hub/substrate-node-template</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> substrate-node-template</span></code></pre></div>
+<h3 id="第二步編譯節點">第二步：編譯節點</h3>
+<p>這一步會非常耗時（取決於你的電腦性能，通常需要 10-30
+分鐘），因為它需要編譯數千個 Rust 依賴包。</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 檢查並切換到最新的穩定分支（這一步很重要，確保代碼穩定）</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout latest</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 開始編譯（release 模式運行速度更快）</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="ex">cargo</span> build <span class="at">--release</span></span></code></pre></div>
+<p>如果看到 <code>Finished release [optimized] target(s) in ...</code>
+的字樣，恭喜你，編譯成功！</p>
+<h2 id="運行區塊鏈-run-the-node">3. 運行區塊鏈 (Run the Node)</h2>
+<p>現在，你的電腦裡已經躺著一個剛出爐的區塊鏈可執行文件了。</p>
+<h3 id="啟動開發模式">啟動開發模式</h3>
+<p>我們使用 <code>--dev</code>
+標誌來啟動。這個模式會自動清空舊數據，並且預設使用 “Alice”
+這個測試帳戶作為驗證人，非常適合開發調試。</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./target/release/node-template</span> <span class="at">--dev</span></span></code></pre></div>
+<p>你會看到終端機開始瘋狂輸出日誌，類似這樣：</p>
+<pre class="log"><code>2025-11-21 10:15:00 Substrate Node
+2025-11-21 10:15:00 ✌️  version 4.0.0-dev-abc1234
+2025-11-21 10:15:05 💤 Idle (0 peers), best: #1 (0x123...), finalized #0 (0x000...), ⬇ 0 ⬆ 0
+2025-11-21 10:15:10 ✨ Imported #2 (0xabc...)</code></pre>
+<p>看到 <code>Imported #...</code> 代表你的區塊鏈正在穩定出塊！</p>
+<h2 id="與你的鏈互動-interact">4. 與你的鏈互動 (Interact)</h2>
+<p>區塊鏈跑起來了，但怎麼用呢？我們不需要自己寫前端，可以使用波卡強大的通用區塊鏈瀏覽器。</p>
+<ol type="1">
+<li><p>打開瀏覽器，訪問：<a
+target="_blank" rel="noopener" href="https://polkadot.js.org/apps/">https://polkadot.js.org/apps/</a></p></li>
+<li><p>點擊左上角的圖標切換網絡。</p></li>
+<li><p>選擇 Development -&gt; Local Node (127.0.0.1:9944)。</p></li>
+<li><p>點擊 Switch。</p></li>
+</ol>
+<p>此刻，你看到的介面就是你自己電腦上運行的那條鏈！</p>
+<h3 id="嘗試發起一筆交易">嘗試發起一筆交易</h3>
+<p>去 Accounts 頁面，你會看到內置的測試帳戶 ALICE, BOB 等，且 ALICE
+擁有大量初始代幣。</p>
+<ol type="1">
+<li><p>點擊 ALICE 旁邊的 Send。</p></li>
+<li><p>接收方選 BOB，輸入金額。</p></li>
+<li><p>點擊 Sign and Submit。</p></li>
+<li><p>幾秒鐘後，你會看到綠色的成功提示，BOB 的餘額增加了。</p></li>
+</ol>
+<p>這一切都發生在你剛剛編譯的本地區塊鏈上，沒有消耗任何真實的 Gas
+費。</p>
+<h2 id="進階substrate-的魔力-修改-runtime">5. 進階：Substrate 的魔力 ——
+修改 Runtime</h2>
+<p>這條鏈目前只有基本的轉帳功能。Substrate 的強大之處在於它的模組化
+(Pallets)。</p>
+<p>如果你想為這條鏈增加「治理功能」或「智能合約功能」，你不需要重寫核心代碼，只需要在
+<code>runtime/src/lib.rs</code> 文件中引入對應的 Pallet 即可。</p>
+<p>例如，一個典型的 Substrate 節點結構如下：</p>
+<ul>
+<li><p><code>node/</code>: 負責 P2P 網絡、RPC 通訊（外殼）。</p></li>
+<li><p><code>runtime/</code>: 負責區塊鏈的邏輯（核心大腦）。</p></li>
+<li><p><code>pallets/</code>: 具體的業務模組（如
+<code>pallet-balances</code> 管理餘額, <code>pallet-staking</code>
+管理質押）。</p></li>
+</ul>
+<h1 id="結語">結語</h1>
+<p>通過這篇文章，我們從宏觀視角俯瞰了 Polkadot
+的多鏈宇宙，理解了中繼鏈與平行鏈如何像機場與航班一樣協作；我們也深入微觀，親手在終端機中編譯並運行了
+Web3 的基石 —— Substrate 節點。</p>
+<p>這條本地運行的鏈，就是未來的平行鏈雛形。只要接入中繼鏈，它就能瞬間獲得與數十億美元資產互通的能力。這就是波卡
+“SDK for Blockchains” 的真正威力。</p>
+
+    </div>
+    
+    
+    
+    
+    
+    
+    
+</div>
+
+            <footer id="footer">
+    <div id="footer-wrap">
+        <div>
+            &copy;
+            2024 - 2025 t2o0n321.blog
+            <span id="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;t2o0n321
+        </div>
+        <div>
+            Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp;
+            <a target="_blank" rel="noopener" href="https://github.com/theme-particlex/hexo-theme-particlex">ParticleX Theme</a>
+        </div>
+        
+    </div>
+</footer>
+
+        </div>
+        
+        <transition name="fade">
+            <div id="preview" ref="preview" v-show="previewShow">
+                <img id="preview-content" ref="previewContent" />
+            </div>
+        </transition>
+        
+    </div>
+    <script src="/js/main.js"></script>
+    
+    
+
+
+
+
+    
+</body>
+</html>
